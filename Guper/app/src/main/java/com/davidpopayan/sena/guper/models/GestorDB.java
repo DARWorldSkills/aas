@@ -1,4 +1,4 @@
-package com.davidpopayan.sena.guper;
+package com.davidpopayan.sena.guper.models;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

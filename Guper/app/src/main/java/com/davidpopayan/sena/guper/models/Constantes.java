@@ -1,4 +1,4 @@
-package com.davidpopayan.sena.guper;
+package com.davidpopayan.sena.guper.models;
 
 public class Constantes {
 

@@ -1,4 +1,4 @@
-package com.davidpopayan.sena.guper;
+package com.davidpopayan.sena.guper.Controllers;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -13,6 +13,7 @@ import android.view.MenuItem;
 
 import com.davidpopayan.sena.guper.Fragments.FragmentPerfil;
 import com.davidpopayan.sena.guper.Fragments.FragmentPermiso;
+import com.davidpopayan.sena.guper.R;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {

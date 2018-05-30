@@ -1,8 +1,10 @@
-package com.davidpopayan.sena.guper;
+package com.davidpopayan.sena.guper.Controllers;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.davidpopayan.sena.guper.R;
 
 import java.util.Timer;
 import java.util.TimerTask;
