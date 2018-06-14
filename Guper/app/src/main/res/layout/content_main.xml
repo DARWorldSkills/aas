@@ -8,6 +8,6 @@
     tools:context=".Controllers.MainActivity"
     tools:showIn="@layout/app_bar_main"
     android:id="@+id/contenedor"
-    android:background="@color/colorgris">
+    android:background="#fff">
 
 </android.support.constraint.ConstraintLayout>

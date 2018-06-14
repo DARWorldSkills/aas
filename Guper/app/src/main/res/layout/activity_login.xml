@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Controllers.Login"
-    android:background="@color/colorgris">
+    android:background="#fff">
 
     <TextView
         android:id="@+id/splash"
@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="56dp"
+        android:layout_marginTop="44dp"
         android:fontFamily="@font/raleway_black_italic"
         android:text="Guper"
         android:textColor="@color/colorAzuloscuro"
@@ -35,28 +35,18 @@
         app:layout_constraintTop_toBottomOf="@+id/splash"
         app:srcCompat="@drawable/logoguper" />
 
-    <ImageView
-        android:id="@+id/imageView4"
-        android:layout_width="85dp"
-        android:layout_height="75dp"
-        android:layout_marginBottom="4dp"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/sena" />
-
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="20dp"
         android:fontFamily="@font/raleway_light"
         android:text="Bienvenido(a)"
         android:textColor="@color/colorAzuloscuro"
         android:textSize="25sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.126"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView3"
         tools:ignore="MissingConstraints" />
@@ -67,11 +57,13 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="16dp"
         android:ems="10"
+        android:fontFamily="@font/raleway_light"
+        android:hint="@string/user"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.681"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
@@ -83,37 +75,12 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:ems="10"
+        android:hint="@string/password"
         android:inputType="textPassword"
+        android:fontFamily="@font/raleway_light"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.687"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtUser" />
-
-    <ImageView
-        android:id="@+id/imageView5"
-        android:layout_width="40dp"
-        android:layout_height="36dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="340dp"
-        app:layout_constraintEnd_toStartOf="@+id/txtUser"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/userprueba" />
-
-    <ImageView
-        android:id="@+id/imageView6"
-        android:layout_width="39dp"
-        android:layout_height="35dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintEnd_toStartOf="@+id/txtPass"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView5"
-        app:srcCompat="@drawable/password" />
 
     <Button
         android:id="@+id/btnLogin"
@@ -121,10 +88,11 @@
         android:layout_height="55dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="472dp"
+        android:layout_marginTop="492dp"
+        android:background="@color/colorAzuloscuro"
+        android:fontFamily="@font/raleway_medium"
         android:onClick="enviar"
         android:text="Iniciar sesión"
-        android:background="@color/colorAzuloscuro"
         android:textColor="#fff"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

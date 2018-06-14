@@ -11,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.davidpopayan.sena.guper.Fragments.FragmentInicio;
 import com.davidpopayan.sena.guper.Fragments.FragmentPerfil;
 import com.davidpopayan.sena.guper.Fragments.FragmentPermiso;
 import com.davidpopayan.sena.guper.R;
@@ -82,6 +83,8 @@ public class MainActivity extends AppCompatActivity
             getSupportFragmentManager().beginTransaction().replace(R.id.contenedor, fragment).commit();
 
         } else if (id == R.id.nav_ver) {
+            fragment = new FragmentInicio();
+            getSupportFragmentManager().beginTransaction().replace(R.id.contenedor, fragment).commit();
 
         } else if (id == R.id.nav_perfil) {
 
