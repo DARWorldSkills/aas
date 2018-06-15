@@ -248,4 +248,7 @@ public class FragmentPermiso extends Fragment implements View.OnClickListener{
         });
     }
 
+
+
+
 }

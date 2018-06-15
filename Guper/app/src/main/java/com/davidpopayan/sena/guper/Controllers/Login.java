@@ -53,6 +53,7 @@ public class Login extends AppCompatActivity {
     }
 
     public void enviar(View view) {
+        btnLogin.setEnabled(false);
         String user = txtUser.getText().toString();
         String pass = txtPass.getText().toString();
 

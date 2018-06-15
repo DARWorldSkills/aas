@@ -87,6 +87,14 @@ public class FragmentPerfil extends Fragment implements View.OnClickListener{
         cargarUsuario();
     }
 
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        cargarPerfil();
+        cargarUsuario();
+    }
+
     public void inizialite(View v){
 
         txtnombre = v.findViewById(R.id.txtNombrePerfil);
