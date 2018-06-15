@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -39,8 +40,8 @@ public class FragmentPerfil extends Fragment implements View.OnClickListener{
 
     ImageView ImgPerfil;
     Button btnCambiarP,btnGuardar;
-    List<Persona> personaList;
-    List<User> userList;
+    Persona personaP= new Persona();
+    User userP= new User() ;
     TextView txtnombre, txtapellidos, txttelefono,txtdocumento, txtemail, txtpassword;
 
     public FragmentPerfil() {
@@ -60,7 +61,6 @@ public class FragmentPerfil extends Fragment implements View.OnClickListener{
         inizialite(view);
         cargarPerfil();
         cargarUsuario();
-        mostrarPerfil();
 
 
 
@@ -80,6 +80,12 @@ public class FragmentPerfil extends Fragment implements View.OnClickListener{
     }
 
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        cargarPerfil();
+        cargarUsuario();
+    }
 
     public void inizialite(View v){
 
@@ -123,13 +129,15 @@ public class FragmentPerfil extends Fragment implements View.OnClickListener{
     public void cargarPerfil(){
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
         String url = Login.personaUrl;
+
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Gson gson = new Gson();
 
-                Type tipodelista = new TypeToken<List<Persona>>(){}.getType();
-                personaList = gson.fromJson(response, tipodelista);
+                personaP = gson.fromJson(response, Persona.class);
+
+
 
 
             }
@@ -148,13 +156,14 @@ public class FragmentPerfil extends Fragment implements View.OnClickListener{
     public void cargarUsuario(){
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
         String url = Login.userUrl;
+
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Gson gson = new Gson();
-                Type tipodelista = new TypeToken<List<User>>(){}.getType();
-                userList = gson.fromJson(response, tipodelista);
 
+                userP = gson.fromJson(response, User.class);
+                mostrarPerfil();
             }
         }, new Response.ErrorListener() {
             @Override
@@ -168,14 +177,16 @@ public class FragmentPerfil extends Fragment implements View.OnClickListener{
 
 
     private void mostrarPerfil() {
-        txtnombre.setText(personaList.get(0).getNombres());
-        txtapellidos.setText(personaList.get(0).getApellidos());
-        txttelefono.setText(personaList.get(0).getTelefono());
-        txtdocumento.setText(personaList.get(0).getDocumento());
-        txtemail.setText(userList.get(0).getEmail());
-        txtpassword.setText(userList.get(0).getPassword());
+
+        txtnombre.setText(personaP.getNombres());
+        txtapellidos.setText(personaP.getApellidos());
+        txttelefono.setText(personaP.getTelefono());
+        txtdocumento.setText(personaP.getDocumentoIdentidad());
+        txtemail.setText(userP.getEmail());
+        txtpassword.setText(userP.getPassword());
 
     }
+
 
 
 }

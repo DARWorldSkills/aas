@@ -2,7 +2,7 @@ package com.davidpopayan.sena.guper.models;
 
 public class Persona {
     private String url;
-    private String documento;
+    private String documentoIdentidad;
     private String nombres;
     private String apellidos;
     private String telefono;
@@ -19,12 +19,12 @@ public class Persona {
         this.url = url;
     }
 
-    public String getDocumento() {
-        return documento;
+    public String getDocumentoIdentidad() {
+        return documentoIdentidad;
     }
 
-    public void setDocumento(String documento) {
-        this.documento = documento;
+    public void setDocumentoIdentidad(String documentoIdentidad) {
+        this.documentoIdentidad = documentoIdentidad;
     }
 
     public String getNombres() {

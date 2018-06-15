@@ -13,9 +13,23 @@ import android.widget.NumberPicker;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.davidpopayan.sena.guper.Controllers.Login;
 import com.davidpopayan.sena.guper.R;
+import com.davidpopayan.sena.guper.models.Permiso;
+import com.davidpopayan.sena.guper.models.Persona;
+import com.google.gson.Gson;
 
+import java.lang.reflect.Type;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -33,6 +47,9 @@ public class FragmentPermiso extends Fragment implements View.OnClickListener{
     private int hora = c.get(Calendar.HOUR_OF_DAY);
     private int minuto = c.get(Calendar.MINUTE);
 
+    public Permiso permisoP = new Permiso();
+
+    public Persona personaP;
 
     public FragmentPermiso() {
         // Required empty public constructor
@@ -63,6 +80,11 @@ public class FragmentPermiso extends Fragment implements View.OnClickListener{
         return view;
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        personaP = Login.personaT;
+    }
 
     @Override
     public void onClick(View v) {
@@ -142,4 +164,88 @@ public class FragmentPermiso extends Fragment implements View.OnClickListener{
         }, hora , minuto , false);
         recoger.show();
     }
+
+
+
+
+    public void solicitar_permiso(){
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        String url = "https://guper.herokuapp.com/api/solicitar_permiso/";
+        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Gson gson = new Gson();
+                permisoP = gson.fromJson(response, permisoP.getClass());
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> parameters = new HashMap<>();
+                parameters.put("motivo","Enfermedad");
+                parameters.put("solicitoPermisoPor","Migraña intensiva");
+                parameters.put("permisoPorHora","0");
+                parameters.put("permisoPorDias","2");
+                parameters.put("horaSalida","1:00pm");
+                parameters.put("fecha","2018-06-18");
+
+
+                return  parameters;
+            }
+        };
+
+        requestQueue.add(request);
+
+    }
+
+    public void aprendizPermiso(){
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        String url="";
+        StringRequest stringRequest  = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> parameters = new HashMap<>();
+
+                parameters.put("estado","En espera");
+                parameters.put("permiso",permisoP.getUrl());
+                parameters.put("persona","");
+
+                return parameters;
+            }
+        };
+
+    }
+
+
+
+    public void obtenerInstructor(){
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        String url = "";
+        StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+    }
+
 }

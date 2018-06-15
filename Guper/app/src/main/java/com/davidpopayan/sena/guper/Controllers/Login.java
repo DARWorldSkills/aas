@@ -33,6 +33,7 @@ public class Login extends AppCompatActivity {
     public static String userUrl;
     public static String personaN;
     public static String personaUrl;
+    public static Persona personaT;
 
 
     @Override
@@ -142,6 +143,7 @@ public class Login extends AppCompatActivity {
                     if (personaList.get(i).getUsuario().equals(userUrl)){
                         personaN = personaList.get(i).getNombres();
                         personaUrl = personaList.get(i).getUrl();
+                        personaT = personaList.get(i);
                     }
                 }
 
