@@ -157,4 +157,9 @@ public class FragmentListarPermisosIn extends Fragment {
         requestQueue.add(stringRequest);
     }
 
+    public void iniciarsesionSin(){
+
+
+    }
+
 }

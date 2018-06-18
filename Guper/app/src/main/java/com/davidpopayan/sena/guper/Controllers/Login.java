@@ -1,6 +1,8 @@
 package com.davidpopayan.sena.guper.Controllers;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -47,6 +49,7 @@ public class Login extends AppCompatActivity {
     int contador;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,35 +58,10 @@ public class Login extends AppCompatActivity {
         btnLogin.setEnabled(true);
 
 
+
         //consultaRol();
     }
 
-    public void consultaRol(){
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while (rolB==true){
-                    try {
-                        Thread.sleep(1000);
-                    } catch (Exception e) {
-
-                    }
-                    contador=contador+1;
-
-
-
-
-                }
-
-            }
-        });
-
-        thread.start();
-        if (contador==3){
-
-        }
-
-    }
 
 
     private void inicializar() {
@@ -111,6 +89,8 @@ public class Login extends AppCompatActivity {
         }
 
         Roles(user, pass);
+
+
 
     }
 
@@ -246,6 +226,7 @@ public class Login extends AppCompatActivity {
                         if (rolList.get(j).getRol().equals("APRENDIZ") && rolPersonaList.get(i).getRol().equals(rolList.get(j).getUrl())
                                 && rolPersonaList.get(i).getPersona().equals(personaUrl)) {
                             iniciarSesion=1;
+                            guardarSesion();
                             Intent intent = new Intent(Login.this, MainActivity.class);
                             Toast.makeText(Login.this, "Bienvenido "+personaN, Toast.LENGTH_SHORT).show();
                             startActivity(intent);
@@ -258,6 +239,7 @@ public class Login extends AppCompatActivity {
                             if (rolList.get(j).getRol().equals("INSTRUCTOR") && rolPersonaList.get(i).getRol().equals(rolList.get(j).getUrl())
                                     && rolPersonaList.get(i).getPersona().equals(personaUrl)) {
                                 iniciarSesion=2;
+                                guardarSesion();
                                 Intent intent = new Intent(Login.this, MainActivity.class);
                                 Toast.makeText(Login.this, "Bienvenido "+personaN, Toast.LENGTH_SHORT).show();
                                 startActivity(intent);
@@ -283,6 +265,13 @@ public class Login extends AppCompatActivity {
         });
 
         requestQueue.add(stringRequest);
+    }
+    public void guardarSesion(){
+        SharedPreferences usuarioI= getSharedPreferences("iniciarSesion", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = usuarioI.edit();
+        editor.putString("user",txtUser.getText().toString());
+        editor.putString("password",txtPass.getText().toString());
+        editor.commit();
     }
 
     public void entrar(String username, String password){
