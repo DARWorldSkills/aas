@@ -117,4 +117,11 @@ public class MainActivity extends AppCompatActivity
         editor.putString("password","No existe");
         editor.commit();
     }
+
+    public void ListarInstructor(){
+
+    }
+
+
+
 }

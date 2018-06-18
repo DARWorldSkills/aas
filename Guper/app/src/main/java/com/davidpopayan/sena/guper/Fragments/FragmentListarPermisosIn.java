@@ -17,14 +17,19 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.davidpopayan.sena.guper.Controllers.DetalleListaInstruc;
+import com.davidpopayan.sena.guper.Controllers.Login;
 import com.davidpopayan.sena.guper.R;
 import com.davidpopayan.sena.guper.models.AdapterIn;
+import com.davidpopayan.sena.guper.models.AprendizFicha;
+import com.davidpopayan.sena.guper.models.AprendizPermiso;
 import com.davidpopayan.sena.guper.models.Constantes;
 import com.davidpopayan.sena.guper.models.Ficha;
+import com.davidpopayan.sena.guper.models.Permiso;
 import com.davidpopayan.sena.guper.models.Persona;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import java.io.File;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,8 +50,10 @@ public class FragmentListarPermisosIn extends Fragment {
     private String mParam2;
 
     RecyclerView recyclerView;
-    List<Persona> personaList= new ArrayList<>();
-    List<Ficha> fichaList = new ArrayList<>();
+    List<Persona> personaListA= new ArrayList<>();
+    List<Ficha> fichaListA = new ArrayList<>();
+    List<AprendizPermiso> aprendizPermisoListA = new ArrayList<>();
+    List<AprendizFicha> aprendizFichaListA = new ArrayList<>();
 
 
     public FragmentListarPermisosIn() {
@@ -87,7 +94,7 @@ public class FragmentListarPermisosIn extends Fragment {
         View v= inflater.inflate(R.layout.fragment_fragment_listar_permisos_in, container, false);
 
         recyclerView= v.findViewById(R.id.rvPermisoIn);
-        AdapterIn adapterIn = new AdapterIn(personaList,fichaList);
+        AdapterIn adapterIn = new AdapterIn(personaListA,fichaListA);
         recyclerView.setAdapter(adapterIn);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL,false));
         recyclerView.setHasFixedSize(true);
@@ -102,12 +109,23 @@ public class FragmentListarPermisosIn extends Fragment {
         return v;
     }
 
-    public void listarPermisos(){
+    public void listarAprendizPermiso(){
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
-        String url = Constantes.urlPermiso;
+        String url = "";
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+                Gson gson = new Gson();
+                Type type = new TypeToken<List<AprendizPermiso>>(){}.getType();
+                List<AprendizPermiso> aprendizPermisoList = gson.fromJson(response, type);
+                for (int i=0; i<aprendizPermisoList.size(); i++){
+                    if (aprendizPermisoList.get(i).getInstructor().equals(Login.personaUrl)) {
+                        aprendizPermisoListA.add(aprendizPermisoListA.get(i));
+                    }
+
+                }
+
+                listarPersona();
 
             }
         }, new Response.ErrorListener() {
@@ -116,9 +134,38 @@ public class FragmentListarPermisosIn extends Fragment {
 
             }
         });
+        requestQueue.add(stringRequest);
+
+
     }
 
-    public void listarPersona (){
+   public void listarPermisos(){
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        String url = Constantes.urlPermiso;
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Gson gson = new Gson();
+                Type type = new TypeToken<List<Permiso>>(){}.getType();
+                List<Permiso> permisoList = gson.fromJson(response,type);
+                for (int i =0; i<permisoList.size(); i++){
+                    for (int j = 0; j<aprendizPermisoListA.size(); j++){
+
+                    }
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+        requestQueue.add(stringRequest);
+    }
+
+
+    public void listarPersona(){
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
         String url = Constantes.urlPersona;
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
@@ -127,7 +174,16 @@ public class FragmentListarPermisosIn extends Fragment {
                 Gson gson = new Gson();
                 Type type = new TypeToken<List<Persona>>(){}.getType();
                 List<Persona> personaList = gson.fromJson(response, type);
-
+                for (int i=0; i<personaList.size(); i++){
+                    Persona persona = personaListA.get(i);
+                    for (int j=0; j<aprendizPermisoListA.size(); i++){
+                        AprendizPermiso aprendizPermiso =aprendizPermisoListA.get(j);
+                        if (aprendizPermiso.getPersona().equals(persona.getUrl())){
+                            personaListA.add(persona);
+                        }
+                    }
+                }
+                listarFichaAprendiz();
 
             }
         }, new Response.ErrorListener() {
@@ -138,6 +194,37 @@ public class FragmentListarPermisosIn extends Fragment {
         });
         requestQueue.add(stringRequest);
     }
+
+
+    public void listarFichaAprendiz(){
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        String url = Constantes.urlAprendizFicha;
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Gson gson = new Gson();
+                Type type = new TypeToken<List<AprendizFicha>>(){}.getType();
+                List<AprendizFicha> aprendizFichaList = gson.fromJson(response,type);
+                for (int i=0; i<aprendizFichaList.size(); i++){
+                    AprendizFicha aprendizFicha = aprendizFichaList.get(i);
+                    for (int j =0 ; j<personaListA.size(); j++){
+                        Persona persona= personaListA.get(j);
+                        if (persona.getUrl().equals(aprendizFicha.getPersona())){
+                            aprendizFichaListA.add(aprendizFicha);
+                        }
+                    }
+                }
+                listarFicha();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+        requestQueue.add(stringRequest);
+    }
+
 
     public void listarFicha(){
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
@@ -145,6 +232,18 @@ public class FragmentListarPermisosIn extends Fragment {
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+                Gson gson = new Gson();
+                Type type = new TypeToken<List<Ficha>>(){}.getType();
+                List<Ficha> fichaList = gson.fromJson(response, type);
+                for (int i=0; i<fichaList.size(); i++){
+                    Ficha ficha = fichaList.get(i);
+                    for (int j=0; j<aprendizFichaListA.size(); j++){
+                        AprendizFicha aprendizFicha = aprendizFichaListA.get(i);
+                        if (aprendizFicha.getFicha().equals(ficha.getUrl())){
+                            fichaListA.add(ficha);
+                        }
+                    }
+                }
 
             }
         }, new Response.ErrorListener() {
@@ -155,10 +254,6 @@ public class FragmentListarPermisosIn extends Fragment {
         });
 
         requestQueue.add(stringRequest);
-    }
-
-    public void iniciarsesionSin(){
-
 
     }
 

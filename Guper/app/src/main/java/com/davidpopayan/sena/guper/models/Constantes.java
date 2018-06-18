@@ -19,7 +19,7 @@ public class Constantes {
    public static final String urlAprendizPermiso="https://guperproject.herokuapp.com/api/aceptar_permiso/";
    public static final String urlFicha="https://guperproject.herokuapp.com/api/ficha/";
    public static final String urlPermiso="https://guperproject.herokuapp.com/api/solicitar_permiso/";
-   public static final String urlPersona="https://guperproject.herokuapp.com/api/actulizar_perfil/";
+   public static final String urlPersona="https://guperproject.herokuapp.com/api/persona/";
    public static final String urlRol="https://guperproject.herokuapp.com/api/Rol/";
    public static final String urlRolPersona="https://guperproject.herokuapp.com/api/Rol_persona/";
    public static final String urlUser="https://guperproject.herokuapp.com/api/user/";

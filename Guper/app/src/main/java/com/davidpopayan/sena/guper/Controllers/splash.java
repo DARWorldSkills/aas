@@ -43,8 +43,7 @@ public class splash extends AppCompatActivity {
         SharedPreferences usuarioI = getSharedPreferences("iniciarSesion",Context.MODE_PRIVATE);
         String user = usuarioI.getString("user","No existe");
         String pass = usuarioI.getString("password","No existe");
-        Toast.makeText(this, pass, Toast.LENGTH_SHORT).show();
-        if (user.equals("No existe")) {
+        if (user.equals("No existe") || pass.equals("No existe")) {
             TimerTask timerTask = new TimerTask() {
                 @Override
                 public void run() {
@@ -215,7 +214,6 @@ public class splash extends AppCompatActivity {
                                 return;
                             }else {
                                 Toast.makeText(splash.this, "Usuario no autorizado", Toast.LENGTH_SHORT).show();
-                                return;
                             }
 
                         }
