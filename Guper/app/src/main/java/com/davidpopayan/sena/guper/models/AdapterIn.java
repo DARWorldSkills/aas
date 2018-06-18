@@ -12,18 +12,18 @@ import com.davidpopayan.sena.guper.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AdapterS extends RecyclerView.Adapter<AdapterS.Holder> {
-    List<Permiso> permisoList = new ArrayList<>();
-    List<AprendizPermiso> aprendizPermisoList = new ArrayList<>();
+public class AdapterIn extends RecyclerView.Adapter<AdapterIn.Holder> {
+    List<Persona> personaList = new ArrayList<>();
+    List<Ficha> fichaList = new ArrayList<>();
 
     private OnItemClickListener mlistener;
     public interface  OnItemClickListener{
         void itemClick(int position);
     }
 
-    public AdapterS(List<Permiso> permisoList, List<AprendizPermiso> aprendizPermisoList) {
-        this.permisoList = permisoList;
-        this.aprendizPermisoList = aprendizPermisoList;
+    public AdapterIn(List<Persona> personaList, List<Ficha> fichaList) {
+        this.personaList = personaList;
+        this.fichaList = fichaList;
     }
 
     public void setMlistener(OnItemClickListener mlistener) {
@@ -32,25 +32,25 @@ public class AdapterS extends RecyclerView.Adapter<AdapterS.Holder> {
 
     @Override
     public Holder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_listar_permisos_a,parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_listar_permiso_instructor,parent, false);
         Holder myHolder = new Holder(view,mlistener);
         return myHolder;
     }
 
     @Override
     public void onBindViewHolder(Holder holder, int position) {
-        holder.connectData(permisoList.get(position),aprendizPermisoList.get(position));
+        holder.connectData(personaList.get(position),fichaList.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return permisoList.size();
+        return personaList.size();
     }
 
     public class Holder extends RecyclerView.ViewHolder {
-        TextView txtmotivo = itemView.findViewById(R.id.txtmotivoA);
-        TextView txtfecha = itemView.findViewById(R.id.txtfichaA);
-        TextView txtestado = itemView.findViewById(R.id.txtmotivoA);
+        TextView txtnombre = itemView.findViewById(R.id.txtnombreIt);
+        TextView txtdocumento = itemView.findViewById(R.id.txtdocumentoIn);
+        TextView txtficha = itemView.findViewById(R.id.txtfichaIn);
         public Holder(View itemView, final OnItemClickListener listener) {
             super(itemView);
             itemView.setOnClickListener(new View.OnClickListener() {
@@ -67,10 +67,10 @@ public class AdapterS extends RecyclerView.Adapter<AdapterS.Holder> {
 
 
         }
-        public void connectData(Permiso permiso, AprendizPermiso aprendizPermiso){
-            txtmotivo.setText(permiso.getMotivo());
-            txtfecha.setText(permiso.getFecha());
-            txtestado.setText(aprendizPermiso.getEstado());
+        public void connectData(Persona persona, Ficha ficha){
+            txtnombre.setText(persona.getNombres() +"\n"+ persona.getApellidos() );
+            txtdocumento.setText(persona.getDocumentoIdentidad());
+            txtficha.setText(ficha.getNumeroFicha());
         }
 
 

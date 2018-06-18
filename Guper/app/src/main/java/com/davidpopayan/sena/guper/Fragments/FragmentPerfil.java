@@ -43,6 +43,9 @@ public class FragmentPerfil extends Fragment implements View.OnClickListener{
     Persona personaP= new Persona();
     User userP= new User() ;
     TextView txtnombre, txtapellidos, txttelefono,txtdocumento, txtemail, txtpassword;
+    boolean bandera=false;
+    boolean hiloB=true;
+    int contador;
 
     public FragmentPerfil() {
         // Required empty public constructor
@@ -85,6 +88,8 @@ public class FragmentPerfil extends Fragment implements View.OnClickListener{
         super.onStart();
         cargarPerfil();
         cargarUsuario();
+        mostrarPerfil();
+
     }
 
 
@@ -135,29 +140,7 @@ public class FragmentPerfil extends Fragment implements View.OnClickListener{
     }
 
     public void cargarPerfil(){
-        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
-        String url = Login.personaUrl;
-
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                Gson gson = new Gson();
-
-                personaP = gson.fromJson(response, Persona.class);
-
-
-
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-        });
-
-
-        requestQueue.add(stringRequest);
+        personaP=Login.personaT;
 
     }
 
@@ -169,8 +152,8 @@ public class FragmentPerfil extends Fragment implements View.OnClickListener{
             @Override
             public void onResponse(String response) {
                 Gson gson = new Gson();
-
                 userP = gson.fromJson(response, User.class);
+                bandera = true;
                 mostrarPerfil();
             }
         }, new Response.ErrorListener() {

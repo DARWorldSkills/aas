@@ -16,6 +16,18 @@
             android:id="@+id/nav_perfil"
             android:icon="@drawable/perfilnav"
             android:title="Perfil" />
+
+
+        <item
+            android:id="@+id/nav_permisoI"
+            android:icon="@drawable/perfilnav"
+            android:title="PermisoInstructor" />
+
+        <item
+            android:id="@+id/nav_VerIns"
+            android:icon="@drawable/perfilnav"
+            android:title="VerInstructor" />
+
     </group>
 
 </menu>

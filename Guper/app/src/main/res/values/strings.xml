@@ -34,4 +34,20 @@
     <string name="SolicitoPermisoPor">Solicito Permiso por</string>
     <string name="Enviar">Enviar</string>
 
+    <string name="solicitarficha">Solicitar Salida Ficha</string>
+    <string name="permisosespera">Permisos en Espera</string>
+    <string name="salida">Salida de Ficha</string>
+    <string name="Nficha">Numero de Ficha</string>
+    <string name="horahora">Hora:</string>
+    <string name="motivo">Motivo:</string>
+    <string name="solicitopermiso">Solicito Permiso por</string>
+    <string name="enviar">Enviar</string>
+
+    <string name="comprendido">Comprendido De:</string>
+    <string name="Detalle">Detalle</string>
+    <string name="permiso">Permiso</string>
+    <string name="aceptar">Aceptar</string>
+    <string name="rechazar">Rechazar</string>
+
+
 </resources>

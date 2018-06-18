@@ -20,6 +20,7 @@ import com.davidpopayan.sena.guper.Controllers.Login;
 import com.davidpopayan.sena.guper.R;
 import com.davidpopayan.sena.guper.models.AdapterS;
 import com.davidpopayan.sena.guper.models.AprendizPermiso;
+import com.davidpopayan.sena.guper.models.Constantes;
 import com.davidpopayan.sena.guper.models.Permiso;
 import com.davidpopayan.sena.guper.models.Persona;
 import com.google.gson.Gson;
@@ -49,6 +50,8 @@ public class FragmentListarPermisos extends Fragment {
     private String mParam2;
     RecyclerView recyclerView;
     public Persona persona = new Persona();
+    public static AprendizPermiso aprendizPermiso = new AprendizPermiso();
+    public static Permiso permisoA = new Permiso();
 
     List<Permiso> permisoAList = new ArrayList<>();
     List<AprendizPermiso> aprendizAPermisoList = new ArrayList<>();
@@ -85,6 +88,7 @@ public class FragmentListarPermisos extends Fragment {
         }
     }
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -99,7 +103,8 @@ public class FragmentListarPermisos extends Fragment {
         adapterS.setMlistener(new AdapterS.OnItemClickListener() {
             @Override
             public void itemClick(int position) {
-
+                aprendizPermiso = aprendizAPermisoList.get(position);
+                permisoA = permisoAList.get(position);
             }
         });
 
@@ -115,6 +120,8 @@ public class FragmentListarPermisos extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+        listarAprendizPermiso();
+        listarPermiso();
 
     }
 
@@ -125,22 +132,6 @@ public class FragmentListarPermisos extends Fragment {
         }
     }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
 
     /**
      * This interface must be implemented by activities that contain this
@@ -158,18 +149,19 @@ public class FragmentListarPermisos extends Fragment {
     }
 
 
-    public void listarPermisos(){
+    public void listarAprendizPermiso(){
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
-        String url = "";
+        String url = Constantes.urlPermiso;
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Gson gson  = new Gson();
-                Type type = new TypeToken<List<Persona>>(){}.getType();
-                List<Persona> personaList = gson.fromJson(response, type);
-                for (int i=0; i<personaList.size(); i++){
-                    if (personaList.get(i).getUrl().equals(Login.personaUrl)){
+                Type type = new TypeToken<List<AprendizPermiso>>(){}.getType();
+                List<AprendizPermiso> aprendizPermisoList = gson.fromJson(response, type);
+                for (int i=0; i<aprendizPermisoList.size(); i++){
+                    if (aprendizPermisoList.get(i).getPersona().equals(Login.personaUrl)){
                         //Falta algo :(
+                        aprendizAPermisoList.add(aprendizPermisoList.get(i));
                     }
                 }
 
@@ -182,6 +174,40 @@ public class FragmentListarPermisos extends Fragment {
             }
         });
 
+        requestQueue.add(stringRequest);
+
+
+
+
+    }
+
+
+    public void listarPermiso(){
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        String url= Constantes.urlPermiso;
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Gson gson = new Gson();
+                Type type = new TypeToken<List<Permiso>>(){}.getType();
+                List<Permiso> permisoList = gson.fromJson(response, type);
+                for (int i=0; i<permisoList.size(); i++){
+                    for (int j=0; j<aprendizAPermisoList.size(); j++) {
+                        if (permisoList.get(i).getUrl().equals(aprendizAPermisoList.get(j))){
+                            permisoAList.add(permisoList.get(i));
+
+                        }
+
+                    }
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+        requestQueue.add(stringRequest);
     }
 
 

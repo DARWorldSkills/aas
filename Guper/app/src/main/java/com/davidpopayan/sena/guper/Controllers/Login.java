@@ -16,24 +16,35 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.davidpopayan.sena.guper.R;
+import com.davidpopayan.sena.guper.models.Constantes;
 import com.davidpopayan.sena.guper.models.Persona;
+import com.davidpopayan.sena.guper.models.Rol;
+import com.davidpopayan.sena.guper.models.RolPersona;
 import com.davidpopayan.sena.guper.models.User;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class Login extends AppCompatActivity {
-    String urll = "https://guper.herokuapp.com/rest-auth/login/";
     EditText txtUser, txtPass;
     Button btnLogin;
     public static String userUrl;
     public static String personaN;
     public static String personaUrl;
     public static Persona personaT;
+    public static User userT;
+    List<Rol> rolList;
+    public static int iniciarSesion=0;
+    boolean rolB = true;
+    int contador;
 
 
     @Override
@@ -43,21 +54,54 @@ public class Login extends AppCompatActivity {
         inicializar();
         btnLogin.setEnabled(true);
 
+
+        //consultaRol();
     }
+
+    public void consultaRol(){
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (rolB==true){
+                    try {
+                        Thread.sleep(1000);
+                    } catch (Exception e) {
+
+                    }
+                    contador=contador+1;
+
+
+
+
+                }
+
+            }
+        });
+
+        thread.start();
+        if (contador==3){
+
+        }
+
+    }
+
 
     private void inicializar() {
 
         txtUser = findViewById(R.id.txtUser);
         txtPass = findViewById(R.id.txtPass);
         btnLogin = findViewById(R.id.btnLogin);
+        Date date = new Date();
+
     }
 
     public void enviar(View view) {
+
         btnLogin.setEnabled(false);
         String user = txtUser.getText().toString();
         String pass = txtPass.getText().toString();
 
-        logeo(user, "", pass);
+
         if (user.isEmpty()){
             txtUser.setError("Campo obligatorio");
             txtUser.requestFocus();
@@ -66,11 +110,13 @@ public class Login extends AppCompatActivity {
             txtPass.requestFocus();
         }
 
+        Roles(user, pass);
+
     }
 
     public void logeo(final String username, final String email , final String password){
         RequestQueue requestQueue = Volley.newRequestQueue(this);
-        String url = "https://guper.herokuapp.com/rest-auth/login/";
+        String url = Constantes.urlLogin;
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -99,7 +145,7 @@ public class Login extends AppCompatActivity {
 
     public void obtenerUrlUsuario(final String username){
         RequestQueue requestQueue = Volley.newRequestQueue(this);
-        String url ="https://guper.herokuapp.com/api/user/";
+        String url = Constantes.urlUser;
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -133,7 +179,7 @@ public class Login extends AppCompatActivity {
     public void obtenerPersona(){
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
-        String url="https://guper.herokuapp.com/api/actulizar_perfil/";
+        String url=Constantes.urlPersona;
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -145,12 +191,11 @@ public class Login extends AppCompatActivity {
                         personaN = personaList.get(i).getNombres();
                         personaUrl = personaList.get(i).getUrl();
                         personaT = personaList.get(i);
+
+
                     }
                 }
-
-                Intent intent = new Intent(Login.this, MainActivity.class);
-                startActivity(intent);
-                finish();
+                iniciarComo();
 
             }
         }, new Response.ErrorListener() {
@@ -164,6 +209,81 @@ public class Login extends AppCompatActivity {
 
     }
 
+    public void Roles(final String user, final String pass){
+        RequestQueue requestQueue = new Volley().newRequestQueue(this);
+        String url = Constantes.urlRol;
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Gson gson = new Gson();
+                Type type = new TypeToken<List<Rol>>(){}.getType();
+                rolList = new ArrayList<>();
+                rolList = gson.fromJson(response, type);
+                logeo(user, "", pass);
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+
+        requestQueue.add(stringRequest);
+    }
+
+    public void iniciarComo(){
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        String url = Constantes.urlRolPersona;
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Gson gson = new Gson();
+                Type type = new TypeToken<List<RolPersona>>(){}.getType();
+                List<RolPersona> rolPersonaList = gson.fromJson(response,type);
+                for (int i=0; i<rolPersonaList.size();i++){
+                    for (int j=0; j<rolList.size(); j++){
+                        if (rolList.get(j).getRol().equals("APRENDIZ") && rolPersonaList.get(i).getRol().equals(rolList.get(j).getUrl())
+                                && rolPersonaList.get(i).getPersona().equals(personaUrl)) {
+                            iniciarSesion=1;
+                            Intent intent = new Intent(Login.this, MainActivity.class);
+                            Toast.makeText(Login.this, "Bienvenido "+personaN, Toast.LENGTH_SHORT).show();
+                            startActivity(intent);
+                            finish();
+                            return;
+                        }
+                        else{
+
+
+                            if (rolList.get(j).getRol().equals("INSTRUCTOR") && rolPersonaList.get(i).getRol().equals(rolList.get(j).getUrl())
+                                    && rolPersonaList.get(i).getPersona().equals(personaUrl)) {
+                                iniciarSesion=2;
+                                Intent intent = new Intent(Login.this, MainActivity.class);
+                                Toast.makeText(Login.this, "Bienvenido "+personaN, Toast.LENGTH_SHORT).show();
+                                startActivity(intent);
+                                finish();
+                                return;
+                            }else {
+                                Toast.makeText(Login.this, "Usuario no autorizado", Toast.LENGTH_SHORT).show();
+                                btnLogin.setEnabled(true);
+                            }
+
+                        }
+
+
+                    }
+
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+
+        requestQueue.add(stringRequest);
+    }
 
     public void entrar(String username, String password){
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);

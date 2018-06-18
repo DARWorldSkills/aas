@@ -12,8 +12,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.davidpopayan.sena.guper.Fragments.FragmentInicio;
+import com.davidpopayan.sena.guper.Fragments.FragmentListarPermisos;
 import com.davidpopayan.sena.guper.Fragments.FragmentPerfil;
 import com.davidpopayan.sena.guper.Fragments.FragmentPermiso;
+import com.davidpopayan.sena.guper.Fragments.FragmentPermisoIn;
 import com.davidpopayan.sena.guper.R;
 
 public class MainActivity extends AppCompatActivity
@@ -83,13 +85,21 @@ public class MainActivity extends AppCompatActivity
             getSupportFragmentManager().beginTransaction().replace(R.id.contenedor, fragment).commit();
 
         } else if (id == R.id.nav_ver) {
-            fragment = new FragmentInicio();
+            fragment = new FragmentListarPermisos();
             getSupportFragmentManager().beginTransaction().replace(R.id.contenedor, fragment).commit();
 
         } else if (id == R.id.nav_perfil) {
 
             fragment = new FragmentPerfil();
             getSupportFragmentManager().beginTransaction().replace(R.id.contenedor, fragment).commit();
+
+        }else if (id == R.id.nav_permisoI) {
+
+            fragment = new FragmentPermisoIn();
+            getSupportFragmentManager().beginTransaction().replace(R.id.contenedor, fragment).commit();
+
+        }else if (id == R.id.nav_VerIns){
+
 
         }
 

@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Fragments.FragmentPermisoIn">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <ScrollView
+
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginStart="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/raleway_black_italic"
+                android:text="@string/salida"
+                android:textAlignment="center"
+                android:textColor="@color/colorAzuloscuro"
+                android:textSize="20sp" />
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="25dp"
+                    android:fontFamily="@font/raleway_light"
+                    android:text="@string/Nficha"
+                    android:textColor="@color/colorAzuloscuro"
+                    android:textSize="15sp" />
+
+                <Spinner
+                    android:id="@+id/spinnerFichas"
+                    android:layout_width="197dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="13dp">
+
+
+                </Spinner>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="@font/raleway_light"
+                    android:text="@string/fecha"
+                    android:textColor="@color/colorAzuloscuro"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/FechaDelDia"
+                    android:layout_width="173dp"
+                    android:layout_height="wrap_content"
+
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="60dp"
+                    android:fontFamily="@font/raleway_light"
+                    android:textColor="@color/colorAzuloscuro"
+                    android:textSize="16sp" />
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                tools:layout_editor_absoluteX="8dp"
+                tools:layout_editor_absoluteY="189dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="@font/raleway_light"
+                    android:text="@string/horahora"
+                    android:textColor="@color/colorAzuloscuro"
+                    android:textSize="16sp" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="384dp"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/Hora1Instructor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="43dp"
+                    android:fontFamily="@font/raleway_light"
+                    android:hint="@string/hora"
+                    android:textSize="16sp" />
+
+                <ImageButton
+                    android:id="@+id/btnHora1Instructor"
+                    android:layout_width="39dp"
+                    android:layout_height="41dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_toEndOf="@+id/Hora1Instructor"
+                    android:background="@color/colorAzulclaro"
+                    android:src="@mipmap/hora" />
+
+                <EditText
+                    android:id="@+id/Hora2Instructor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginEnd="128dp"
+                    android:fontFamily="@font/raleway_light"
+                    android:hint="@string/hora"
+                    android:textSize="16sp" />
+
+                <ImageButton
+                    android:id="@+id/btnHora2Instructor"
+                    android:layout_width="39dp"
+                    android:layout_height="41dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="-128dp"
+                    android:layout_toEndOf="@+id/Hora2Instructor"
+                    android:background="@color/colorAzulclaro"
+                    android:src="@mipmap/hora" />
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:fontFamily="@font/raleway_light"
+                    android:text="@string/motivo"
+                    android:textColor="@color/colorAzuloscuro"
+                    android:textSize="16sp" />
+
+                <Spinner
+                    android:id="@+id/SpinnerMotivo"
+                    android:layout_width="181dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="13dp">
+
+
+                </Spinner>
+
+
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/raleway_light"
+                android:text="@string/solicitopermiso"
+                android:textColor="@color/colorAzuloscuro"
+                android:textSize="16sp" />
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="70dp">
+
+                <EditText
+                    android:id="@+id/motivopor"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:fontFamily="@font/raleway_light" />
+
+
+            </RelativeLayout>
+
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="41dp"
+                android:layout_gravity="center"
+                android:background="@color/colorAzulclaro"
+                android:fontFamily="@font/raleway_light"
+                android:text="@string/enviar"
+                android:textColor="#fff"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+</android.support.constraint.ConstraintLayout>
