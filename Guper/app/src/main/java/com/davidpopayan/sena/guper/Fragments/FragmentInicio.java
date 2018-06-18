@@ -38,6 +38,8 @@ public class FragmentInicio extends Fragment{
 
          return view;
     }
+
+
 }
 
 

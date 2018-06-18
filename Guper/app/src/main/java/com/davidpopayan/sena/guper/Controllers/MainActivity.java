@@ -1,5 +1,7 @@
 package com.davidpopayan.sena.guper.Controllers;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.design.widget.NavigationView;
@@ -106,5 +108,13 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void cerrarSesion(){
+        SharedPreferences sharedPreferences = getSharedPreferences("iniciarSesion", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("user","No existe");
+        editor.putString("password","No existe");
+        editor.commit();
     }
 }
