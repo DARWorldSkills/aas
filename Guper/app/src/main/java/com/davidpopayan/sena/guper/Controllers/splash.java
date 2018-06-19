@@ -15,7 +15,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.davidpopayan.sena.guper.R;
+import com.davidpopayan.sena.guper.models.AprendizFicha;
 import com.davidpopayan.sena.guper.models.Constantes;
+import com.davidpopayan.sena.guper.models.Ficha;
 import com.davidpopayan.sena.guper.models.Persona;
 import com.davidpopayan.sena.guper.models.Rol;
 import com.davidpopayan.sena.guper.models.RolPersona;
@@ -35,6 +37,7 @@ public class splash extends AppCompatActivity {
 
 
     List<Rol> rolList;
+    AprendizFicha aprendizFichaA;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -195,10 +198,7 @@ public class splash extends AppCompatActivity {
                         if (rolList.get(j).getRol().equals("APRENDIZ") && rolPersonaList.get(i).getRol().equals(rolList.get(j).getUrl())
                                 && rolPersonaList.get(i).getPersona().equals(Login.personaUrl)) {
                             Login.iniciarSesion=1;
-                            Intent intent = new Intent(splash.this, MainActivity.class);
-                            Toast.makeText(splash.this, "Bienvenido "+Login.personaN, Toast.LENGTH_SHORT).show();
-                            startActivity(intent);
-                            finish();
+                            guardarCambiar();
                             return;
                         }
                         else{
@@ -207,13 +207,8 @@ public class splash extends AppCompatActivity {
                             if (rolList.get(j).getRol().equals("INSTRUCTOR") && rolPersonaList.get(i).getRol().equals(rolList.get(j).getUrl())
                                     && rolPersonaList.get(i).getPersona().equals(Login.personaUrl)) {
                                 Login.iniciarSesion=2;
-                                Intent intent = new Intent(splash.this, MainActivity.class);
-                                Toast.makeText(splash.this, "Bienvenido "+Login.personaN, Toast.LENGTH_SHORT).show();
-                                startActivity(intent);
-                                finish();
+                                guardarCambiar();
                                 return;
-                            }else {
-                                Toast.makeText(splash.this, "Usuario no autorizado", Toast.LENGTH_SHORT).show();
                             }
 
                         }
@@ -222,6 +217,12 @@ public class splash extends AppCompatActivity {
                     }
 
                 }
+
+                Toast.makeText(splash.this, "Error de inicio automático", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(splash.this, Login.class);
+                startActivity(intent);
+                finish();
+
             }
         }, new Response.ErrorListener() {
             @Override
@@ -231,6 +232,71 @@ public class splash extends AppCompatActivity {
         });
 
         requestQueue.add(stringRequest);
+    }
+
+    public void guardarCambiar(){
+        obtenerPersonaFicha();
+        Intent intent = new Intent(splash.this, MainActivity.class);
+        Toast.makeText(splash.this, "Bienvenido "+Login.personaN, Toast.LENGTH_SHORT).show();
+        startActivity(intent);
+        finish();
+    }
+
+
+    public void obtenerPersonaFicha(){
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        String url = Constantes.urlAprendizFicha;
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Gson gson = new Gson();
+                Type type = new TypeToken<List<AprendizFicha>>(){}.getType();
+                List<AprendizFicha> aprendizFichaList = gson.fromJson(response, type);
+                for (int i=0; i<aprendizFichaList.size(); i++){
+                    AprendizFicha aprendizFicha = aprendizFichaList.get(i);
+                    if (aprendizFicha.getPersona().equals(Login.personaUrl)){
+                        aprendizFichaA =aprendizFicha;
+                    }
+                }
+                obtenerFicha();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+        requestQueue.add(stringRequest);
+    }
+
+    public void obtenerFicha(){
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        String url = Constantes.urlFicha;
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Gson gson = new Gson();
+                Type type = new TypeToken<List<Ficha>>(){}.getType();
+                List<Ficha> fichaList = gson.fromJson(response,type);
+                for (int i=0; i<fichaList.size(); i++){
+                    Ficha ficha = fichaList.get(i);
+                    if (ficha.getUrl().equals(aprendizFichaA.getFicha())){
+                        Login.fichaA=ficha;
+
+                    }
+
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+
+        requestQueue.add(stringRequest);
+
     }
 
 

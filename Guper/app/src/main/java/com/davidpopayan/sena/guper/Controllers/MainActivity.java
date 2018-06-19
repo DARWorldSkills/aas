@@ -1,6 +1,7 @@
 package com.davidpopayan.sena.guper.Controllers;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -40,6 +41,15 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.setItemIconTintList(null);
+
+
+        if (Login.iniciarSesion == 1){
+            navigationView.getMenu().setGroupVisible(R.id.grupo2, false);
+
+        }
+        if (Login.iniciarSesion == 2){
+            navigationView.getMenu().setGroupVisible(R.id.grupo1, false);
+        }
     }
 
     @Override
@@ -103,6 +113,10 @@ public class MainActivity extends AppCompatActivity
         }else if (id == R.id.nav_VerIns){
 
 
+        }else if (id == R.id.nav_cerrar){
+            cerrarSesion();
+        }else if ( id == R.id.nav_cerrar2){
+            cerrarSesion();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -116,6 +130,9 @@ public class MainActivity extends AppCompatActivity
         editor.putString("user","No existe");
         editor.putString("password","No existe");
         editor.commit();
+
+        Intent intent = new Intent(MainActivity.this, Login.class);
+        startActivity(intent);
     }
 
     public void ListarInstructor(){

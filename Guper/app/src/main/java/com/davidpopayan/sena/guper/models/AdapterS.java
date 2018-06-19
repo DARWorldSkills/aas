@@ -50,7 +50,7 @@ public class AdapterS extends RecyclerView.Adapter<AdapterS.Holder> {
     public class Holder extends RecyclerView.ViewHolder {
         TextView txtmotivo = itemView.findViewById(R.id.txtmotivoA);
         TextView txtfecha = itemView.findViewById(R.id.txtfichaA);
-        TextView txtestado = itemView.findViewById(R.id.txtmotivoA);
+        TextView txtestado = itemView.findViewById(R.id.txtestado);
         public Holder(View itemView, final OnItemClickListener listener) {
             super(itemView);
             itemView.setOnClickListener(new View.OnClickListener() {
@@ -59,7 +59,7 @@ public class AdapterS extends RecyclerView.Adapter<AdapterS.Holder> {
                     if (listener!=null){
                         int position= getAdapterPosition();
                         if (position!=RecyclerView.NO_POSITION){
-
+                            listener.itemClick(position);
                         }
                     }
                 }

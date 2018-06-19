@@ -1,12 +1,21 @@
 package com.davidpopayan.sena.guper.models;
 
 public class AprendizPermiso {
+    private String url;
     private String estado;
     private String instructor;
     private String permiso;
     private String persona;
 
     public AprendizPermiso() {
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public String getEstado() {

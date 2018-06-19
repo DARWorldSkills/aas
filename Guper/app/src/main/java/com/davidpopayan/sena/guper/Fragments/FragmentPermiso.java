@@ -4,6 +4,7 @@ package com.davidpopayan.sena.guper.Fragments;
 import android.app.AlertDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -26,11 +27,16 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.davidpopayan.sena.guper.Controllers.Login;
+import com.davidpopayan.sena.guper.Controllers.MainActivity;
 import com.davidpopayan.sena.guper.R;
+import com.davidpopayan.sena.guper.models.AprendizFicha;
 import com.davidpopayan.sena.guper.models.Constantes;
 import com.davidpopayan.sena.guper.models.Permiso;
 import com.davidpopayan.sena.guper.models.Persona;
+import com.davidpopayan.sena.guper.models.Rol;
+import com.davidpopayan.sena.guper.models.RolPersona;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.text.DateFormat;
@@ -46,11 +52,11 @@ import java.util.Map;
  * A simple {@link Fragment} subclass.
  */
 public class FragmentPermiso extends Fragment implements View.OnClickListener{
-    ImageButton btnHora1, btnHora2, btnHora11, btnHora22;
-    EditText txtHora1, txtHora2,txtHoraT1, txtHoraT2;
+    ImageButton btnHora1, btnHora11, btnHora22;
+    EditText txtHora1,txtHoraT1, txtHoraT2;
     EditText txtSolicitarP;
     Button btnenviar;
-    Spinner spMotivo;
+    Spinner spMotivo, spinstructor;
 
     private static  final String Cero = "0";
     private static  final  String DOS_PUNTOS = ":";
@@ -61,6 +67,10 @@ public class FragmentPermiso extends Fragment implements View.OnClickListener{
     private int minuto = c.get(Calendar.MINUTE);
 
     public Permiso permisoP = new Permiso();
+    public List<Persona> personaAList = new ArrayList<>();
+    public List<Rol> rolList = new ArrayList<>();
+    public List<RolPersona> rolPersonaAList = new ArrayList<>();
+    public List<String> instructorList= new ArrayList<>();
 
     public Persona personaP;
 
@@ -75,21 +85,19 @@ public class FragmentPermiso extends Fragment implements View.OnClickListener{
         View view = inflater.inflate(R.layout.fragment_fragment_permiso, container, false);
 
         btnHora1 = view.findViewById(R.id.btnHora1);
-        btnHora2 = view.findViewById(R.id.btnHora2);
         btnHora11 = view.findViewById(R.id.btnHora11);
-        btnHora22 = view.findViewById(R.id.btnHora22);
         txtHora1 = view.findViewById(R.id.txtHota1);
-        txtHora2 = view.findViewById(R.id.txtHora2);
         txtHoraT1 = view.findViewById(R.id.txtHoraT1);
         txtSolicitarP = view.findViewById(R.id.txtdetalleSP);
-        txtHoraT2= view.findViewById(R.id.txtHoraT2);
         btnenviar = view.findViewById(R.id.btnEnviar);
         spMotivo = view.findViewById(R.id.spmotivoP);
+        spinstructor = view.findViewById(R.id.spInstructor);
+        Roles();
         listarMotivos();
-       btnHora1.setOnClickListener(this);
-       btnHora2.setOnClickListener(this);
+
+
+        btnHora1.setOnClickListener(this);
        btnHora11.setOnClickListener(this);
-       btnHora22.setOnClickListener(this);
        btnenviar.setOnClickListener(this);
 
 
@@ -111,6 +119,7 @@ public class FragmentPermiso extends Fragment implements View.OnClickListener{
     public void onStart() {
         super.onStart();
         personaP = Login.personaT;
+
     }
 
     @Override
@@ -120,20 +129,13 @@ public class FragmentPermiso extends Fragment implements View.OnClickListener{
                 obtenerHora1();
 
                 break;
-            case R.id.btnHora2:
 
-                obtenerHora2();
-                break;
 
             case R.id.btnHora11:
                 obtenerHora11();
 
                 break;
 
-            case R.id.btnHora22:
-                obtenerHora22();
-
-                break;
 
             case R.id.btnEnviar:
                 solicitar_permiso();
@@ -142,11 +144,6 @@ public class FragmentPermiso extends Fragment implements View.OnClickListener{
         }
     }
 
-    private void obtenerHora22() {
-
-        numberpicker2();
-
-    }
 
     private void obtenerHora11() {
         numberpicker1();
@@ -238,26 +235,7 @@ public class FragmentPermiso extends Fragment implements View.OnClickListener{
 
     }
 
-    private void obtenerHora2() {
-        TimePickerDialog recoger = new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
-            @Override
-            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
 
-                String hora =(hourOfDay <10) ? String.valueOf(Cero + hourOfDay) : String.valueOf(hourOfDay);
-                String minuto = (minute <10) ? String.valueOf(Cero + minute) : String.valueOf(minute);
-                String AM_PM;
-
-                if (hourOfDay<12){
-                    AM_PM = "a.m.";
-                }else {
-                    AM_PM = "p.m.";
-                }
-                txtHora2.setText(hora + DOS_PUNTOS + minuto + "" + AM_PM);
-
-            }
-        }, hora , minuto , false);
-        recoger.show();
-    }
 
 
 
@@ -270,13 +248,13 @@ public class FragmentPermiso extends Fragment implements View.OnClickListener{
             public void onResponse(String response) {
                 Gson gson = new Gson();
                 permisoP = gson.fromJson(response, permisoP.getClass());
-                Toast.makeText(getContext(), permisoP.getUrl(), Toast.LENGTH_SHORT).show();
                 aprendizPermiso();
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                Toast.makeText(getContext(), "No se ha llenado los datos necesarios", Toast.LENGTH_SHORT).show();
+                btnenviar.setEnabled(true);
             }
         }){
             @Override
@@ -284,9 +262,9 @@ public class FragmentPermiso extends Fragment implements View.OnClickListener{
                 Map<String, String> parameters = new HashMap<>();
                 parameters.put("motivo",spMotivo.getSelectedItem().toString());
                 parameters.put("solicitoPermisoPor",txtSolicitarP.getText().toString());
-                parameters.put("permisoPorHora","0");
+                parameters.put("permisoPorHora",txtHoraT1.getText().toString());
                 parameters.put("permisoPorDias","2");
-                parameters.put("horaSalida","1:00pm");
+                parameters.put("horaSalida",txtHora1.getText().toString());
                 Date date = new Date();
                 DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
                 parameters.put("fecha",dateFormat.format(date));
@@ -306,6 +284,7 @@ public class FragmentPermiso extends Fragment implements View.OnClickListener{
         StringRequest stringRequest  = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+                Toast.makeText(getContext(), "Se ha solicitado el permiso correctamente", Toast.LENGTH_SHORT).show();
 
             }
         }, new Response.ErrorListener() {
@@ -317,7 +296,8 @@ public class FragmentPermiso extends Fragment implements View.OnClickListener{
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> parameters = new HashMap<>();
-                parameters.put("estado","En espera");
+                parameters.put("estado","En Espera");
+                parameters.put("instructor","1");
                 parameters.put("permiso",permisoP.getUrl());
                 parameters.put("persona",personaP.getUrl());
 
@@ -328,12 +308,85 @@ public class FragmentPermiso extends Fragment implements View.OnClickListener{
         requestQueue.add(stringRequest);
     }
 
+    public void Roles(){
+        RequestQueue requestQueue = new Volley().newRequestQueue(getContext());
+        String url = Constantes.urlRol;
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Gson gson = new Gson();
+                Type type = new TypeToken<List<Rol>>(){}.getType();
+                rolList = gson.fromJson(response, type);
+                obtenerRolInstructor();
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+
+        requestQueue.add(stringRequest);
+    }
+
+    public void obtenerRolInstructor(){
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        String url = Constantes.urlRolPersona;
+        StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Gson gson = new Gson();
+                Type type = new TypeToken<List<RolPersona>>(){}.getType();
+                List<RolPersona> rolPersonaList = gson.fromJson(response,type);
+                for (int i=0; i<rolPersonaList.size(); i++){
+                    RolPersona rolPersona = rolPersonaList.get(i);
+                    for (int j=0; j<rolList.size(); j++){
+                        if (rolList.get(j).getRol().equals("INSTRUCTOR") && rolPersona.getRol().equals(rolList.get(j).getUrl())) {
+                            rolPersonaAList.add(rolPersona);
+
+
+                        }
+                    }
+                }
+                obtenerPersona();
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+
+
+        requestQueue.add(request);
+    }
+
+
+
     public void obtenerPersona(){
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
         String url = Constantes.urlPersona;
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+                Gson gson = new Gson();
+                Type type = new TypeToken<List<Persona>>(){}.getType();
+                List<Persona> personaList = gson.fromJson(response,type);
+                for (int i=0; i<personaList.size(); i++){
+                    Persona persona =personaList.get(i);
+                    for (int j=0; j<rolPersonaAList.size(); j++) {
+                        if (persona.getUrl().equals(rolPersonaAList.get(j).getPersona())) {
+                            personaAList.add(persona);
+
+                        }
+                    }
+                }
+
+                fichaInstructor();
+
 
             }
         }, new Response.ErrorListener() {
@@ -342,15 +395,37 @@ public class FragmentPermiso extends Fragment implements View.OnClickListener{
 
             }
         });
+
+        requestQueue.add(stringRequest);
     }
 
 
-    public void obtenerInstructor(){
+
+    public void fichaInstructor(){
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
-        String url = Constantes.urlPersona;
+        String url = Constantes.urlAprendizFicha;
         StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+                Gson gson = new Gson();
+                Type type = new TypeToken<List<AprendizFicha>>(){}.getType();
+                List<AprendizFicha> aprendizFichaList = gson.fromJson(response,type);
+                for (int i=0; i<aprendizFichaList.size();i++){
+                    AprendizFicha aprendizFicha = aprendizFichaList.get(i);
+                    for (int j=0; j<personaAList.size(); j++){
+                        Persona persona = personaAList.get(j);
+                        if (aprendizFicha.getPersona().equals(persona.getUrl()) && aprendizFicha.getFicha().equals(Login.fichaA.getUrl())){
+                            instructorList.add(persona.getNombres()+" "+persona.getApellidos());
+
+                        }
+
+
+                    }
+                }
+
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(),android.R.layout.simple_spinner_dropdown_item,instructorList);
+                spinstructor.setAdapter(adapter);
+
 
             }
         }, new Response.ErrorListener() {
@@ -359,9 +434,8 @@ public class FragmentPermiso extends Fragment implements View.OnClickListener{
 
             }
         });
+
+        requestQueue.add(request);
     }
-
-
-
 
 }

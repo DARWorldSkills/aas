@@ -3,7 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <group android:checkableBehavior="single">
+    <group
+        android:id="@+id/grupo1"
+        android:checkableBehavior="single">
         <item
             android:id="@+id/nav_solicitar"
             android:icon="@drawable/solicitar"
@@ -17,16 +19,34 @@
             android:icon="@drawable/perfilnav"
             android:title="Perfil" />
 
+        <item
+            android:id="@+id/nav_cerrar"
+            android:icon="@drawable/cerrar"
+            android:title="Cerrar Sesión"/>
+
+
+    </group>
+
+
+
+      <group
+          android:id="@+id/grupo2"
+          android:checkableBehavior="single">
 
         <item
             android:id="@+id/nav_permisoI"
-            android:icon="@drawable/perfilnav"
+            android:icon="@drawable/solicitar"
             android:title="PermisoInstructor" />
 
         <item
             android:id="@+id/nav_VerIns"
-            android:icon="@drawable/perfilnav"
+            android:icon="@drawable/pruebaper"
             android:title="VerInstructor" />
+
+          <item
+              android:id="@+id/nav_cerrar2"
+              android:icon="@drawable/cerrar"
+              android:title="Cerrar Sesión"/>
 
     </group>
 

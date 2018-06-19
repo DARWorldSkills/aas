@@ -31,8 +31,9 @@
         </activity>
         <activity
             android:name=".Controllers.Login"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name=".Controllers.DetalleListaInstruc"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".Controllers.DetalleListaInstruc" />
+        <activity android:name=".Controllers.DetallePermisoAprendiz"></activity>
     </application>
 
 </manifest>

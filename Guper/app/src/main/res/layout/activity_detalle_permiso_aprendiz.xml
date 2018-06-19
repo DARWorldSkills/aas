@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Controllers.DetalleListaInstruc">
+    tools:context=".Controllers.DetallePermisoAprendiz">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -15,12 +15,17 @@
         android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
             android:orientation="vertical">
 
             <RelativeLayout
@@ -30,6 +35,8 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
                     android:fontFamily="@font/raleway_black_italic"
                     android:text="@string/permiso"
                     android:textAlignment="center"
@@ -56,12 +63,11 @@
 
                 <TextView
 
-                    android:id="@+id/txtnombreDIn"
+                    android:id="@+id/txtnombreDA"
                     android:layout_width="243dp"
                     android:layout_height="match_parent"
                     android:layout_alignParentBottom="true"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginEnd="17dp"
                     android:fontFamily="@font/raleway_light"
                     android:textColor="@color/colorAzuloscuro"
                     android:textSize="16sp" />
@@ -83,12 +89,11 @@
                     android:textSize="16sp" />
 
                 <TextView
-                    android:id="@+id/txtdocumentoDIn"
+                    android:id="@+id/txtdocumentoDA"
                     android:layout_width="192dp"
                     android:layout_height="match_parent"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentTop="true"
-                    android:layout_marginEnd="49dp"
                     android:fontFamily="@font/raleway_light"
                     android:textColor="@color/colorAzuloscuro"
                     android:textSize="16sp" />
@@ -110,7 +115,7 @@
                     android:textSize="16sp" />
 
                 <TextView
-                    android:id="@+id/txtfechaDIn"
+                    android:id="@+id/txtfechaDA"
                     android:layout_width="238dp"
                     android:layout_height="match_parent"
                     android:layout_alignParentEnd="true"
@@ -147,7 +152,7 @@
                     android:layout_height="61dp">
 
                     <TextView
-                        android:id="@+id/txtmotivoDIn"
+                        android:id="@+id/txtmotivoDA"
                         android:layout_width="282dp"
                         android:layout_height="match_parent"
                         android:layout_alignParentTop="true"
@@ -172,7 +177,7 @@
                     android:textSize="16sp" />
 
                 <TextView
-                    android:id="@+id/txtHorasDIn"
+                    android:id="@+id/txtHorasDA"
                     android:layout_width="219dp"
                     android:layout_height="match_parent"
                     android:layout_alignParentTop="true"
@@ -198,7 +203,7 @@
                     android:textSize="16sp" />
 
                 <TextView
-                    android:id="@+id/txtdiasDIn"
+                    android:id="@+id/txtdiasDA"
                     android:layout_width="219dp"
                     android:layout_height="match_parent"
                     android:layout_alignParentTop="true"
@@ -224,7 +229,7 @@
                     android:textSize="16sp" />
 
                 <TextView
-                    android:id="@+id/txtHoraSalidaDIn"
+                    android:id="@+id/txtHoraSalidaDA"
                     android:layout_width="164dp"
                     android:layout_height="match_parent"
                     android:layout_alignParentEnd="true"
@@ -251,7 +256,7 @@
                     android:textSize="16sp" />
 
                 <TextView
-                    android:id="@+id/txtCursoFDIn"
+                    android:id="@+id/txtCursoFDA"
                     android:layout_width="177dp"
                     android:layout_height="match_parent"
                     android:layout_alignParentEnd="true"
@@ -265,29 +270,6 @@
 
 
         </LinearLayout>
-
-
-
     </ScrollView>
-
-    <Button
-        android:id="@+id/btnAceptar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="32dp"
-        android:layout_marginStart="32dp"
-        android:text="@string/aceptar"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/btnRechazar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="32dp"
-        android:layout_marginEnd="32dp"
-        android:text="@string/rechazar"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

@@ -1,6 +1,7 @@
 package com.davidpopayan.sena.guper.Fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -16,6 +18,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.davidpopayan.sena.guper.Controllers.DetallePermisoAprendiz;
 import com.davidpopayan.sena.guper.Controllers.Login;
 import com.davidpopayan.sena.guper.R;
 import com.davidpopayan.sena.guper.models.AdapterS;
@@ -55,6 +58,7 @@ public class FragmentListarPermisos extends Fragment {
 
     List<Permiso> permisoAList = new ArrayList<>();
     List<AprendizPermiso> aprendizAPermisoList = new ArrayList<>();
+    List<Persona> personaAList = new ArrayList<>();
     private OnFragmentInteractionListener mListener;
 
     public FragmentListarPermisos() {
@@ -94,23 +98,8 @@ public class FragmentListarPermisos extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_fragment_listar_permisos, container, false);
-
         recyclerView = v.findViewById(R.id.recyclerListaA);
-        AdapterS adapterS = new AdapterS(permisoAList,aprendizAPermisoList);
-        recyclerView.setAdapter(adapterS);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));
-        recyclerView.setHasFixedSize(true);
-        adapterS.setMlistener(new AdapterS.OnItemClickListener() {
-            @Override
-            public void itemClick(int position) {
-                aprendizPermiso = aprendizAPermisoList.get(position);
-                permisoA = permisoAList.get(position);
-            }
-        });
-
-
-
-
+        listarAprendizPermiso();
         return v;
 
     }
@@ -120,10 +109,15 @@ public class FragmentListarPermisos extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        listarAprendizPermiso();
-        listarPermiso();
+
+
+
+
+
 
     }
+
+
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
@@ -151,7 +145,7 @@ public class FragmentListarPermisos extends Fragment {
 
     public void listarAprendizPermiso(){
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
-        String url = Constantes.urlPermiso;
+        String url = Constantes.urlAprendizPermiso;
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -159,11 +153,12 @@ public class FragmentListarPermisos extends Fragment {
                 Type type = new TypeToken<List<AprendizPermiso>>(){}.getType();
                 List<AprendizPermiso> aprendizPermisoList = gson.fromJson(response, type);
                 for (int i=0; i<aprendizPermisoList.size(); i++){
-                    if (aprendizPermisoList.get(i).getPersona().equals(Login.personaUrl)){
-                        //Falta algo :(
+                    if (Login.personaUrl.equals(aprendizPermisoList.get(i).getPersona())){
+
                         aprendizAPermisoList.add(aprendizPermisoList.get(i));
                     }
                 }
+                listarPermiso();
 
 
             }
@@ -193,13 +188,29 @@ public class FragmentListarPermisos extends Fragment {
                 List<Permiso> permisoList = gson.fromJson(response, type);
                 for (int i=0; i<permisoList.size(); i++){
                     for (int j=0; j<aprendizAPermisoList.size(); j++) {
-                        if (permisoList.get(i).getUrl().equals(aprendizAPermisoList.get(j))){
+                        if (permisoList.get(i).getUrl().equals(aprendizAPermisoList.get(j).getPermiso())){
                             permisoAList.add(permisoList.get(i));
 
                         }
 
                     }
                 }
+
+                AdapterS adapterS = new AdapterS(permisoAList,aprendizAPermisoList);
+
+                recyclerView.setAdapter(adapterS);
+                recyclerView.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));
+                recyclerView.setHasFixedSize(true);
+                adapterS.setMlistener(new AdapterS.OnItemClickListener() {
+                    @Override
+                    public void itemClick(int position) {
+                        aprendizPermiso = aprendizAPermisoList.get(position);
+                        permisoA = permisoAList.get(position);
+                        Intent intent =new Intent(getContext() , DetallePermisoAprendiz.class);
+                        startActivity(intent);
+                    }
+                });
+
             }
         }, new Response.ErrorListener() {
             @Override

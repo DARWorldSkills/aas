@@ -19,7 +19,7 @@
         android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0">
@@ -41,10 +41,10 @@
                     android:id="@+id/textView17"
                     android:layout_width="173dp"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
                     android:layout_alignParentTop="true"
                     android:layout_centerHorizontal="true"
                     android:fontFamily="@font/raleway_black_italic"
+                    android:gravity="center"
                     android:text="Solicita Permiso"
                     android:textColor="@color/colorPrimary"
                     android:textSize="20sp" />
@@ -163,7 +163,7 @@
                     android:textSize="16sp" />
 
                 <Spinner
-                    android:id="@+id/spinner"
+                    android:id="@+id/spInstructor"
                     android:layout_width="148dp"
                     android:layout_height="19dp"
                     android:layout_alignParentBottom="true"
@@ -240,19 +240,6 @@
                     android:textColor="@color/colorPrimary"
                     android:textSize="20dp" />
 
-                <TextView
-                    android:id="@+id/textView19"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginEnd="105dp"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/raleway_black_italic"
-                    android:text="Dias"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="20dp" />
-
 
             </RelativeLayout>
 
@@ -260,18 +247,6 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="45dp">
-
-                <EditText
-                    android:id="@+id/txtHoraT2"
-                    android:layout_width="79dp"
-                    android:layout_height="44dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginEnd="83dp"
-                    android:ems="10"
-                    android:hint="@string/horato"
-                    android:inputType="textPersonName"
-                    android:textAlignment="center" />
 
                 <EditText
                     android:id="@+id/txtHoraT1"
@@ -284,17 +259,6 @@
                     android:hint="@string/horato"
                     android:inputType="textPersonName"
                     android:textAlignment="center" />
-
-                <ImageButton
-                    android:id="@+id/btnHora22"
-                    android:layout_width="36dp"
-                    android:layout_height="34dp"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginStart="-83dp"
-                    android:layout_toEndOf="@+id/txtHoraT2"
-                    android:layout_marginTop="5dp"
-                    android:background="@color/colorAzulclaro"
-                    android:src="@mipmap/hora" />
 
                 <ImageButton
                     android:id="@+id/btnHora11"
@@ -320,11 +284,11 @@
                     android:layout_height="36dp"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
+                    android:layout_marginTop="15dp"
                     android:fontFamily="@font/raleway_black_italic"
                     android:text="@string/comprendido"
-                    android:layout_marginTop="15dp"
-                    android:textColor="@color/colorPrimary"
                     android:textAlignment="center"
+                    android:textColor="@color/colorPrimary"
                     android:textSize="20sp" />
 
 
@@ -340,17 +304,7 @@
                     android:layout_width="90dp"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
-                    android:layout_toEndOf="@+id/btnHora1"
-                    android:ems="10"
-                    android:hint="@string/hora"
-                    android:inputType="textPersonName" />
-
-                <EditText
-                    android:id="@+id/txtHora2"
-                    android:layout_width="98dp"
-                    android:layout_height="43dp"
-                    android:layout_alignParentTop="true"
-                    android:layout_toStartOf="@+id/btnHora2"
+                    android:layout_centerHorizontal="true"
                     android:ems="10"
                     android:hint="@string/hora"
                     android:inputType="textPersonName" />
@@ -363,17 +317,6 @@
                     android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
                     android:layout_marginStart="24dp"
-                    android:background="@color/colorAzulclaro"
-                    android:src="@mipmap/hora" />
-
-                <ImageButton
-                    android:id="@+id/btnHora2"
-                    android:layout_width="36dp"
-                    android:layout_height="34dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginEnd="34dp"
-                    android:layout_marginTop="1dp"
                     android:background="@color/colorAzulclaro"
                     android:src="@mipmap/hora" />
 
@@ -417,9 +360,9 @@
                     android:layout_height="32dp"
                     android:layout_alignParentBottom="true"
                     android:layout_centerHorizontal="true"
+                    android:layout_marginTop="12dp"
                     android:fontFamily="@font/raleway_black_italic"
                     android:text="@string/SolicitoPermisoPor"
-                    android:layout_marginTop="12dp"
                     android:textColor="@color/colorPrimary"
                     android:textSize="20sp" />
 
@@ -440,8 +383,6 @@
                     android:inputType="textMultiLine" />
 
 
-
-
             </RelativeLayout>
 
 
@@ -449,6 +390,7 @@
                 android:id="@+id/btnEnviar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_marginBottom="16dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
@@ -457,13 +399,7 @@
                 android:fontFamily="@font/raleway_light"
                 android:text="@string/Enviar"
                 android:textColor="#fff"
-                android:layout_gravity="center"
                 android:textSize="16sp" />
-
-
-
-
-
 
 
         </LinearLayout>
