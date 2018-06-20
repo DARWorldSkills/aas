@@ -77,7 +77,15 @@ public class splash extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(splash.this, "Error de inicio", Toast.LENGTH_SHORT).show();
+                SharedPreferences sharedPreferences = getSharedPreferences("iniciarSesion", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("user","No existe");
+                editor.putString("password","No existe");
+                editor.commit();
+                Toast.makeText(splash.this, "El usuario no existe", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(splash.this, Login.class);
+                startActivity(intent);
+                finish();
 
             }
         }){
@@ -153,7 +161,7 @@ public class splash extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(splash.this, "Error de inicio", Toast.LENGTH_SHORT).show();
+                Toast.makeText(splash.this, "Error de inicio 2", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -237,7 +245,6 @@ public class splash extends AppCompatActivity {
     public void guardarCambiar(){
         obtenerPersonaFicha();
         Intent intent = new Intent(splash.this, MainActivity.class);
-        Toast.makeText(splash.this, "Bienvenido "+Login.personaN, Toast.LENGTH_SHORT).show();
         startActivity(intent);
         finish();
     }

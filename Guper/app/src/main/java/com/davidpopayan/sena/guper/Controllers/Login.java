@@ -96,6 +96,7 @@ public class Login extends AppCompatActivity {
 
 
 
+
     }
 
     public void logeo(final String username, final String email , final String password){
@@ -109,7 +110,7 @@ public class Login extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(Login.this, "Error de inicio", Toast.LENGTH_SHORT).show();
+                Toast.makeText(Login.this, "El usuario o la contraseña son incorrectos", Toast.LENGTH_SHORT).show();
                 btnLogin.setEnabled(true);
             }
         }){
@@ -185,7 +186,7 @@ public class Login extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(Login.this, "Error de inicio", Toast.LENGTH_SHORT).show();
+                Toast.makeText(Login.this, "Error", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -268,7 +269,6 @@ public class Login extends AppCompatActivity {
         guardarSesion();
         obtenerPersonaFicha();
         Intent intent = new Intent(Login.this, MainActivity.class);
-        Toast.makeText(Login.this, "Bienvenido "+personaN, Toast.LENGTH_SHORT).show();
         startActivity(intent);
         finish();
     }

@@ -81,7 +81,7 @@
                 android:layout_marginTop="5dp">
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="110dp"
                     android:layout_height="match_parent"
                     android:fontFamily="@font/raleway_light"
                     android:text="@string/Documento"
@@ -94,7 +94,7 @@
                     android:layout_height="match_parent"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentTop="true"
-                    android:fontFamily="@font/raleway_light"
+                    android:layout_marginEnd="38dp"
                     android:textColor="@color/colorAzuloscuro"
                     android:textSize="16sp" />
 
@@ -121,7 +121,6 @@
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentTop="true"
                     android:layout_marginEnd="37dp"
-                    android:fontFamily="@font/raleway_light"
                     android:textColor="@color/colorAzuloscuro"
                     android:textSize="16sp" />
 
@@ -149,12 +148,12 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="61dp">
+                    android:layout_height="match_parent">
 
                     <TextView
                         android:id="@+id/txtmotivoDA"
                         android:layout_width="282dp"
-                        android:layout_height="match_parent"
+                        android:layout_height="41dp"
                         android:layout_alignParentTop="true"
                         android:layout_centerHorizontal="true" />
 
@@ -198,44 +197,17 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:fontFamily="@font/raleway_light"
-                    android:text="Dias:"
-                    android:textColor="@color/colorAzuloscuro"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:id="@+id/txtdiasDA"
-                    android:layout_width="219dp"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentTop="true"
-                    android:layout_centerHorizontal="true"
-                    android:fontFamily="@font/raleway_light"
-                    android:textColor="@color/colorAzuloscuro"
-                    android:textSize="16sp" />
-
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="8dp">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:fontFamily="@font/raleway_light"
                     android:text="Hora de salida:"
                     android:textColor="@color/colorAzuloscuro"
                     android:textSize="16sp" />
 
                 <TextView
-                    android:id="@+id/txtHoraSalidaDA"
-                    android:layout_width="164dp"
+                    android:id="@+id/txtdiasDA"
+                    android:layout_width="178dp"
                     android:layout_height="match_parent"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentTop="true"
-                    android:layout_marginEnd="58dp"
-                    android:fontFamily="@font/raleway_light"
+                    android:layout_marginEnd="32dp"
                     android:textColor="@color/colorAzuloscuro"
                     android:textSize="16sp" />
 
@@ -248,7 +220,7 @@
                 android:layout_marginTop="8dp">
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:fontFamily="@font/raleway_light"
                     android:text="Curso de Formacion:"
@@ -257,10 +229,28 @@
 
                 <TextView
                     android:id="@+id/txtCursoFDA"
-                    android:layout_width="177dp"
+                    android:layout_width="166dp"
                     android:layout_height="match_parent"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentTop="true"
+                    android:textColor="@color/colorAzuloscuro"
+                    android:textSize="16sp" />
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="8dp">
+
+                <TextView
+                    android:id="@+id/txtHoraSalidaDA"
+                    android:layout_width="164dp"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginEnd="58dp"
                     android:fontFamily="@font/raleway_light"
                     android:textColor="@color/colorAzuloscuro"
                     android:textSize="16sp" />

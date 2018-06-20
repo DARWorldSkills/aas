@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -159,11 +160,11 @@
 
                 <TextView
                     android:id="@+id/txtApellidosPerfil"
-                    android:layout_width="157dp"
+                    android:layout_width="188dp"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginEnd="70dp"
+                    android:layout_marginEnd="39dp"
                     android:fontFamily="@font/raleway_light"
                     android:textSize="16sp"
                     tools:ignore="MissingConstraints" />
@@ -189,12 +190,12 @@
 
                 <EditText
                     android:id="@+id/txttelefonoPerfil"
-                    android:layout_width="wrap_content"
-                    android:layout_height="36dp"
+                    android:layout_width="203dp"
+                    android:layout_height="match_parent"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentTop="true"
-                    android:layout_marginEnd="43dp"
-                    android:layout_marginTop="7dp"
+                    android:layout_marginEnd="35dp"
+                    android:layout_marginTop="0dp"
                     android:ems="10"
                     android:inputType="number" />
 

@@ -1,6 +1,8 @@
 package com.davidpopayan.sena.guper.Controllers;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -13,9 +15,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
+import com.davidpopayan.sena.guper.Fragments.FragmentAcerca;
 import com.davidpopayan.sena.guper.Fragments.FragmentInicio;
 import com.davidpopayan.sena.guper.Fragments.FragmentListarPermisos;
+import com.davidpopayan.sena.guper.Fragments.FragmentListarPermisosIn;
 import com.davidpopayan.sena.guper.Fragments.FragmentPerfil;
 import com.davidpopayan.sena.guper.Fragments.FragmentPermiso;
 import com.davidpopayan.sena.guper.Fragments.FragmentPermisoIn;
@@ -24,12 +30,17 @@ import com.davidpopayan.sena.guper.R;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    TextView txtNombreMenu;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        Fragment fragment = new FragmentInicio();
+        getSupportFragmentManager().beginTransaction().replace(R.id.contenedor, fragment).commit();
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -41,6 +52,11 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.setItemIconTintList(null);
+
+        View view = navigationView.getHeaderView(0);
+        txtNombreMenu = view.findViewById(R.id.NombreMenu);
+        txtNombreMenu.setText(Login.personaN);
+
 
 
         if (Login.iniciarSesion == 1){
@@ -76,8 +92,23 @@ public class MainActivity extends AppCompatActivity
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
+
+
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.ayuda) {
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Ayuda");
+            builder.setMessage("Para más información, comunícate con nosotros a Guper@gmail.com o visita nuestro sitío web Guperproject.herokuapp.com ");
+            builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                }
+            });
+            builder.show();
+
+
             return true;
         }
 
@@ -111,17 +142,33 @@ public class MainActivity extends AppCompatActivity
             getSupportFragmentManager().beginTransaction().replace(R.id.contenedor, fragment).commit();
 
         }else if (id == R.id.nav_VerIns){
+            fragment = new FragmentListarPermisosIn();
+            getSupportFragmentManager().beginTransaction().replace(R.id.contenedor, fragment).commit();
 
 
-        }else if (id == R.id.nav_cerrar){
-            cerrarSesion();
         }else if ( id == R.id.nav_cerrar2){
             cerrarSesion();
+
+        }else if (id == R.id.acerca){
+            llamar();
+
+        }else if ( id == R.id.acerca2){
+            llamar();
+
+
+        }else if (id == R.id.inicio){
+            fragment = new FragmentInicio();
+            getSupportFragmentManager().beginTransaction().replace(R.id.contenedor, fragment).commit();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void llamar() {
+        Fragment fragment = new FragmentAcerca();
+        getSupportFragmentManager().beginTransaction().replace(R.id.contenedor, fragment).commit();
     }
 
     public void cerrarSesion(){
@@ -133,6 +180,7 @@ public class MainActivity extends AppCompatActivity
 
         Intent intent = new Intent(MainActivity.this, Login.class);
         startActivity(intent);
+        finish();
     }
 
     public void ListarInstructor(){

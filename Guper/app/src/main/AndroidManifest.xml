@@ -14,7 +14,11 @@
         <activity
             android:name=".Controllers.MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar" >
+
+
+
+        </activity>
 
         <meta-data
             android:name="preloaded_fonts"
@@ -23,17 +27,21 @@
         <activity
             android:name=".Controllers.splash"
             android:theme="@style/AppTheme.NoActionBar">
+
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+
         </activity>
         <activity
             android:name=".Controllers.Login"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".Controllers.DetalleListaInstruc" />
-        <activity android:name=".Controllers.DetallePermisoAprendiz"></activity>
+        <activity android:name=".Controllers.DetallePermisoAprendiz" />
     </application>
 
 </manifest>

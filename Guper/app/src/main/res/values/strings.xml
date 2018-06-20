@@ -49,5 +49,19 @@
     <string name="aceptar">Aceptar</string>
     <string name="rechazar">Rechazar</string>
 
+    <string name="cerar">Cerrar Sesión</string>
+    <string name="acerca">Acerca de</string>
+    <string name="ayuda">Ayuda</string>
+    <string name="perfil">Perfil</string>
+    <string name="persoli">Permisos Solicitados</string>
+    <string name="solper">Solicitar Permiso</string>
+    <string name="solperI">Solicitar Permiso Ficha</string>
+    <string name="permisosEs">Permisos en espera</string>
+    <string name="detalle">Detalles</string>
+    <string name="inicio">Inicio</string>
+
+
+    <string name="bienvenido">Bienvenido a Guper</string>
+
 
 </resources>

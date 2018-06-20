@@ -59,6 +59,7 @@ public class FragmentListarPermisos extends Fragment {
     List<Permiso> permisoAList = new ArrayList<>();
     List<AprendizPermiso> aprendizAPermisoList = new ArrayList<>();
     List<Persona> personaAList = new ArrayList<>();
+    Context mContext;
     private OnFragmentInteractionListener mListener;
 
     public FragmentListarPermisos() {
@@ -86,6 +87,7 @@ public class FragmentListarPermisos extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mContext = getContext();
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -144,7 +146,7 @@ public class FragmentListarPermisos extends Fragment {
 
 
     public void listarAprendizPermiso(){
-        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        RequestQueue requestQueue = Volley.newRequestQueue(mContext);
         String url = Constantes.urlAprendizPermiso;
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
@@ -178,7 +180,7 @@ public class FragmentListarPermisos extends Fragment {
 
 
     public void listarPermiso(){
-        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        RequestQueue requestQueue = Volley.newRequestQueue(mContext);
         String url= Constantes.urlPermiso;
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
@@ -186,8 +188,8 @@ public class FragmentListarPermisos extends Fragment {
                 Gson gson = new Gson();
                 Type type = new TypeToken<List<Permiso>>(){}.getType();
                 List<Permiso> permisoList = gson.fromJson(response, type);
-                for (int i=0; i<permisoList.size(); i++){
-                    for (int j=0; j<aprendizAPermisoList.size(); j++) {
+                for (int i=permisoList.size()-1; i>=0; i--){
+                    for (int j=aprendizAPermisoList.size()-1; j>=0; j--) {
                         if (permisoList.get(i).getUrl().equals(aprendizAPermisoList.get(j).getPermiso())){
                             permisoAList.add(permisoList.get(i));
 
@@ -199,14 +201,14 @@ public class FragmentListarPermisos extends Fragment {
                 AdapterS adapterS = new AdapterS(permisoAList,aprendizAPermisoList);
 
                 recyclerView.setAdapter(adapterS);
-                recyclerView.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));
+                recyclerView.setLayoutManager(new LinearLayoutManager(mContext,LinearLayoutManager.VERTICAL,false));
                 recyclerView.setHasFixedSize(true);
                 adapterS.setMlistener(new AdapterS.OnItemClickListener() {
                     @Override
                     public void itemClick(int position) {
                         aprendizPermiso = aprendizAPermisoList.get(position);
                         permisoA = permisoAList.get(position);
-                        Intent intent =new Intent(getContext() , DetallePermisoAprendiz.class);
+                        Intent intent =new Intent(mContext , DetallePermisoAprendiz.class);
                         startActivity(intent);
                     }
                 });

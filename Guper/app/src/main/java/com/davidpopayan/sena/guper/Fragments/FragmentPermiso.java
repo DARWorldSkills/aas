@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.NumberPicker;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -52,11 +53,12 @@ import java.util.Map;
  * A simple {@link Fragment} subclass.
  */
 public class FragmentPermiso extends Fragment implements View.OnClickListener{
-    ImageButton btnHora1, btnHora11, btnHora22;
-    EditText txtHora1,txtHoraT1, txtHoraT2;
+    ImageButton btnHora1, btnHora11;
+    EditText txtHora1,txtHoraT1;
     EditText txtSolicitarP;
     Button btnenviar;
     Spinner spMotivo, spinstructor;
+    TextView txtNombrePed, txtDocumento, txtfecha;
 
     private static  final String Cero = "0";
     private static  final  String DOS_PUNTOS = ":";
@@ -71,8 +73,11 @@ public class FragmentPermiso extends Fragment implements View.OnClickListener{
     public List<Rol> rolList = new ArrayList<>();
     public List<RolPersona> rolPersonaAList = new ArrayList<>();
     public List<String> instructorList= new ArrayList<>();
-
+    Date date = new Date();
+    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     public Persona personaP;
+
+
 
     public FragmentPermiso() {
         // Required empty public constructor
@@ -84,6 +89,7 @@ public class FragmentPermiso extends Fragment implements View.OnClickListener{
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_fragment_permiso, container, false);
 
+
         btnHora1 = view.findViewById(R.id.btnHora1);
         btnHora11 = view.findViewById(R.id.btnHora11);
         txtHora1 = view.findViewById(R.id.txtHota1);
@@ -92,18 +98,27 @@ public class FragmentPermiso extends Fragment implements View.OnClickListener{
         btnenviar = view.findViewById(R.id.btnEnviar);
         spMotivo = view.findViewById(R.id.spmotivoP);
         spinstructor = view.findViewById(R.id.spInstructor);
+        txtNombrePed = view.findViewById(R.id.txtNombreSP);
+        txtDocumento = view.findViewById(R.id.txtdocumentoSP);
+        txtfecha = view.findViewById(R.id.txtFechaSP);
+
         Roles();
         listarMotivos();
 
 
         btnHora1.setOnClickListener(this);
-       btnHora11.setOnClickListener(this);
-       btnenviar.setOnClickListener(this);
+        btnHora11.setOnClickListener(this);
+        btnenviar.setOnClickListener(this);
+
+        txtNombrePed.setText(Login.personaT.getNombres()+ " " + Login.personaT.getApellidos());
+        txtDocumento.setText(Login.personaT.getDocumentoIdentidad());
+        txtfecha.setText(dateFormat.format(date).toString());
 
 
 
         return view;
     }
+
 
     public void listarMotivos(){
         List<String> datos = new ArrayList<>();
@@ -140,6 +155,7 @@ public class FragmentPermiso extends Fragment implements View.OnClickListener{
             case R.id.btnEnviar:
                 solicitar_permiso();
                 btnenviar.setEnabled(false);
+
                 break;
         }
     }
@@ -153,7 +169,7 @@ public class FragmentPermiso extends Fragment implements View.OnClickListener{
 
     private void numberpicker1(){
         NumberPicker mynumberpicker = new NumberPicker(getActivity());
-        mynumberpicker.setMaxValue(24);
+        mynumberpicker.setMaxValue(6);
         mynumberpicker.setMinValue(0);
         NumberPicker.OnValueChangeListener myvaluechange = new NumberPicker.OnValueChangeListener() {
             @Override
@@ -180,37 +196,6 @@ public class FragmentPermiso extends Fragment implements View.OnClickListener{
         builder.show();
     }
 
-    private void numberpicker2(){
-
-        NumberPicker mynumberpicker = new NumberPicker(getActivity());
-        mynumberpicker.setMaxValue(24);
-        mynumberpicker.setMinValue(0);
-        NumberPicker.OnValueChangeListener myvaluechange = new NumberPicker.OnValueChangeListener() {
-            @Override
-            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-
-                txtHoraT2.setText(""+newVal);
-            }
-        };
-        mynumberpicker.setOnValueChangedListener(myvaluechange);
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity()).setView(mynumberpicker);
-        builder.setTitle("Hora");
-        builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-            }
-        });
-        builder.setNegativeButton("cancelar", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-            }
-        });
-        builder.show();
-    }
-
-
 
     private void obtenerHora1() {
 
@@ -234,10 +219,6 @@ public class FragmentPermiso extends Fragment implements View.OnClickListener{
         recoger.show();
 
     }
-
-
-
-
 
 
     public void solicitar_permiso(){
@@ -265,8 +246,6 @@ public class FragmentPermiso extends Fragment implements View.OnClickListener{
                 parameters.put("permisoPorHora",txtHoraT1.getText().toString());
                 parameters.put("permisoPorDias","2");
                 parameters.put("horaSalida",txtHora1.getText().toString());
-                Date date = new Date();
-                DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
                 parameters.put("fecha",dateFormat.format(date));
 
 
@@ -297,7 +276,9 @@ public class FragmentPermiso extends Fragment implements View.OnClickListener{
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> parameters = new HashMap<>();
                 parameters.put("estado","En Espera");
-                parameters.put("instructor","1");
+                String [] tmpId = spinstructor.getSelectedItem().toString().split("-");
+                String parte = tmpId[0];
+                parameters.put("instructor",parte);
                 parameters.put("permiso",permisoP.getUrl());
                 parameters.put("persona",personaP.getUrl());
 
@@ -415,7 +396,7 @@ public class FragmentPermiso extends Fragment implements View.OnClickListener{
                     for (int j=0; j<personaAList.size(); j++){
                         Persona persona = personaAList.get(j);
                         if (aprendizFicha.getPersona().equals(persona.getUrl()) && aprendizFicha.getFicha().equals(Login.fichaA.getUrl())){
-                            instructorList.add(persona.getNombres()+" "+persona.getApellidos());
+                            instructorList.add(persona.getId()+"-"+persona.getNombres()+" "+persona.getApellidos());
 
                         }
 

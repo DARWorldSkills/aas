@@ -189,24 +189,6 @@
                 android:layout_height="match_parent"
                 android:layout_marginTop="8dp">
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:fontFamily="@font/raleway_light"
-                    android:text="Dias:"
-                    android:textColor="@color/colorAzuloscuro"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:id="@+id/txtdiasDIn"
-                    android:layout_width="219dp"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentTop="true"
-                    android:layout_centerHorizontal="true"
-                    android:fontFamily="@font/raleway_light"
-                    android:textColor="@color/colorAzuloscuro"
-                    android:textSize="16sp" />
-
 
             </RelativeLayout>
 

@@ -59,6 +59,7 @@ public class AdapterIn extends RecyclerView.Adapter<AdapterIn.Holder> {
                     if (listener!=null){
                         int position= getAdapterPosition();
                         if (position!=RecyclerView.NO_POSITION){
+                            listener.itemClick(position);
 
                         }
                     }

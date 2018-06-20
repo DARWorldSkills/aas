@@ -3,27 +3,42 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
+
+
+    <group>
+        <item
+            android:id="@+id/inicio"
+            android:title="@string/inicio"
+            android:icon="@drawable/inicio">
+
+        </item>
+    </group>
+
+
     <group
         android:id="@+id/grupo1"
         android:checkableBehavior="single">
         <item
             android:id="@+id/nav_solicitar"
             android:icon="@drawable/solicitar"
-            android:title="Solicitar Permiso" />
+            android:title="@string/solper" />
         <item
             android:id="@+id/nav_ver"
             android:icon="@drawable/pruebaper"
-            android:title="Permisos Solicitados" />
+            android:title="@string/persoli" />
         <item
             android:id="@+id/nav_perfil"
             android:icon="@drawable/perfilnav"
-            android:title="Perfil" />
+            android:title="@string/perfil" />
 
-        <item
-            android:id="@+id/nav_cerrar"
-            android:icon="@drawable/cerrar"
-            android:title="Cerrar Sesión"/>
-
+        <item android:title="@string/detalle">
+            <menu>
+                <item
+                    android:id="@+id/acerca"
+                    android:icon="@drawable/acerca"
+                    android:title="@string/acerca"/>
+            </menu>
+        </item>
 
     </group>
 
@@ -36,17 +51,30 @@
         <item
             android:id="@+id/nav_permisoI"
             android:icon="@drawable/solicitar"
-            android:title="PermisoInstructor" />
+            android:title="@string/solperI" />
 
         <item
             android:id="@+id/nav_VerIns"
             android:icon="@drawable/pruebaper"
-            android:title="VerInstructor" />
+            android:title="@string/permisosEs" />
 
-          <item
-              android:id="@+id/nav_cerrar2"
-              android:icon="@drawable/cerrar"
-              android:title="Cerrar Sesión"/>
+
+          <item android:title="@string/detalle">
+              <menu>
+                  <item
+                      android:id="@+id/acerca2"
+                      android:icon="@drawable/acerca"
+                      android:title="@string/acerca"/>
+
+              </menu>
+          </item>
+
+          <group>
+              <item
+                  android:id="@+id/nav_cerrar2"
+                  android:icon="@drawable/cerrar"
+                  android:title="@string/cerar"/>
+          </group>
 
     </group>
 
