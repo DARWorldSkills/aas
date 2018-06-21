@@ -101,11 +101,27 @@ public class FragmentListarPermisosIn extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v= inflater.inflate(R.layout.fragment_fragment_listar_permisos_in, container, false);
-        listarAprendizPermiso();
         recyclerView= v.findViewById(R.id.rvPermisoIn);
 
 
         return v;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+    }
+
+    @Override
+    public void onStart() {
+        personaListA= new ArrayList<>();
+        fichaListA = new ArrayList<>();
+        aprendizPermisoListA = new ArrayList<>();
+        aprendizFichaListA = new ArrayList<>();
+        permisoListA = new ArrayList<>();
+        super.onStart();
+        listarAprendizPermiso();
     }
 
     public void listarAprendizPermiso(){

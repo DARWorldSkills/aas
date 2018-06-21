@@ -87,9 +87,11 @@ public class Login extends AppCompatActivity {
         if (user.isEmpty()){
             txtUser.setError("Campo obligatorio");
             txtUser.requestFocus();
+            btnLogin.setEnabled(true);
         }else if (pass.isEmpty()){
             txtPass.setError("Campo obligatorio");
             txtPass.requestFocus();
+            btnLogin.setEnabled(true);
         }
 
         Roles(user, pass);
@@ -186,7 +188,8 @@ public class Login extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(Login.this, "Error", Toast.LENGTH_SHORT).show();
+                Toast.makeText(Login.this, "Por favor conectarse a una red", Toast.LENGTH_SHORT).show();
+                btnLogin.setEnabled(true);
             }
         });
 
@@ -210,7 +213,7 @@ public class Login extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                Toast.makeText(Login.this, "Error", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -258,6 +261,7 @@ public class Login extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                Toast.makeText(Login.this, "Error 4", Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -301,7 +305,7 @@ public class Login extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                Toast.makeText(Login.this, "Error 5", Toast.LENGTH_SHORT).show();
             }
         });
         requestQueue.add(stringRequest);
@@ -328,7 +332,7 @@ public class Login extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                Toast.makeText(Login.this, "Error 6", Toast.LENGTH_SHORT).show();
             }
         });
 

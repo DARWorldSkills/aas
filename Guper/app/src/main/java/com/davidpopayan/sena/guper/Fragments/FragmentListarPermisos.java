@@ -154,7 +154,7 @@ public class FragmentListarPermisos extends Fragment {
                 Gson gson  = new Gson();
                 Type type = new TypeToken<List<AprendizPermiso>>(){}.getType();
                 List<AprendizPermiso> aprendizPermisoList = gson.fromJson(response, type);
-                for (int i=0; i<aprendizPermisoList.size(); i++){
+                for (int i=aprendizPermisoList.size()-1; i>=0; i--){
                     if (Login.personaUrl.equals(aprendizPermisoList.get(i).getPersona())){
 
                         aprendizAPermisoList.add(aprendizPermisoList.get(i));

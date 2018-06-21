@@ -185,6 +185,7 @@ public class splash extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                Toast.makeText(splash.this, "Por favor conectarse a una red ", Toast.LENGTH_LONG).show();
 
             }
         });
@@ -235,7 +236,6 @@ public class splash extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
             }
         });
 
@@ -270,7 +270,6 @@ public class splash extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
             }
         });
         requestQueue.add(stringRequest);
@@ -298,7 +297,6 @@ public class splash extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
             }
         });
 

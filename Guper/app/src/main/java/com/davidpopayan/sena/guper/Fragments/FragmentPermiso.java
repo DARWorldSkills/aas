@@ -3,6 +3,7 @@ package com.davidpopayan.sena.guper.Fragments;
 
 import android.app.AlertDialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -76,6 +77,7 @@ public class FragmentPermiso extends Fragment implements View.OnClickListener{
     Date date = new Date();
     DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     public Persona personaP;
+    Context mContext;
 
 
 
@@ -88,7 +90,7 @@ public class FragmentPermiso extends Fragment implements View.OnClickListener{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_fragment_permiso, container, false);
-
+        mContext = getContext();
 
         btnHora1 = view.findViewById(R.id.btnHora1);
         btnHora11 = view.findViewById(R.id.btnHora11);
@@ -167,6 +169,7 @@ public class FragmentPermiso extends Fragment implements View.OnClickListener{
 
     }
 
+
     private void numberpicker1(){
         NumberPicker mynumberpicker = new NumberPicker(getActivity());
         mynumberpicker.setMaxValue(6);
@@ -234,7 +237,7 @@ public class FragmentPermiso extends Fragment implements View.OnClickListener{
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getContext(), "No se ha llenado los datos necesarios", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, "No se ha llenado los datos necesarios", Toast.LENGTH_SHORT).show();
                 btnenviar.setEnabled(true);
             }
         }){
@@ -264,6 +267,10 @@ public class FragmentPermiso extends Fragment implements View.OnClickListener{
             @Override
             public void onResponse(String response) {
                 Toast.makeText(getContext(), "Se ha solicitado el permiso correctamente", Toast.LENGTH_SHORT).show();
+                FragmentListarPermisos nextFrag= new FragmentListarPermisos();
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.contenedor, nextFrag,"FragmentListarPermisos")
+                        .commit();
 
             }
         }, new Response.ErrorListener() {
