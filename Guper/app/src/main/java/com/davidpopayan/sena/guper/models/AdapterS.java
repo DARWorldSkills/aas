@@ -1,6 +1,7 @@
 package com.davidpopayan.sena.guper.models;
 
 
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -48,6 +49,7 @@ public class AdapterS extends RecyclerView.Adapter<AdapterS.Holder> {
     }
 
     public class Holder extends RecyclerView.ViewHolder {
+        CardView cardView = itemView.findViewById(R.id.cardViewApre);
         TextView txtmotivo = itemView.findViewById(R.id.txtmotivoA);
         TextView txtfecha = itemView.findViewById(R.id.txtfichaA);
         TextView txtestado = itemView.findViewById(R.id.txtestado);
@@ -71,6 +73,31 @@ public class AdapterS extends RecyclerView.Adapter<AdapterS.Holder> {
             txtmotivo.setText(permiso.getMotivo());
             txtfecha.setText(permiso.getFecha());
             txtestado.setText(aprendizPermiso.getEstado());
+
+            if (txtestado.getText().toString().equals("Aprobado")){
+                cardView.setBackgroundColor(itemView.getResources().getColor(R.color.aceptado));
+            }
+
+            if (txtestado.getText().toString().equals("En Espera")){
+                cardView.setBackgroundColor(itemView.getResources().getColor(R.color.espera));
+            }
+
+            if (txtestado.getText().toString().equals("Rechazado")){
+                cardView.setBackgroundColor(itemView.getResources().getColor(R.color.rechazado));
+            }
+
+            if (txtestado.getText().toString().equals("Finalizado")){
+                cardView.setBackgroundColor(itemView.getResources().getColor(R.color.finalizado));
+            }
+
+            if (txtestado.getText().toString().equals("Cancelado")){
+                cardView.setBackgroundColor(itemView.getResources().getColor(R.color.cancelado));
+            }
+
+
+
+
+
         }
 
 
