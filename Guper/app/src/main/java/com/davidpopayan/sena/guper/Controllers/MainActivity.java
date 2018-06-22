@@ -18,6 +18,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.davidpopayan.sena.guper.Fragments.FragmentAcerca;
 import com.davidpopayan.sena.guper.Fragments.FragmentInicio;
 import com.davidpopayan.sena.guper.Fragments.FragmentListarPermisos;
@@ -26,11 +32,30 @@ import com.davidpopayan.sena.guper.Fragments.FragmentPerfil;
 import com.davidpopayan.sena.guper.Fragments.FragmentPermiso;
 import com.davidpopayan.sena.guper.Fragments.FragmentPermisoIn;
 import com.davidpopayan.sena.guper.R;
+import com.davidpopayan.sena.guper.models.AprendizFicha;
+import com.davidpopayan.sena.guper.models.Constantes;
+import com.davidpopayan.sena.guper.models.Permiso;
+import com.davidpopayan.sena.guper.models.Persona;
+import com.davidpopayan.sena.guper.models.Rol;
+import com.davidpopayan.sena.guper.models.RolPersona;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     TextView txtNombreMenu;
+    public static Permiso permisoP = new Permiso();
+    public List<Persona> personaAList = new ArrayList<>();
+    public List<Rol> rolList = new ArrayList<>();
+    public List<RolPersona> rolPersonaAList = new ArrayList<>();
+    public static List<String> instructorList= new ArrayList<>();
+
+    RequestQueue requestQueue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +91,9 @@ public class MainActivity extends AppCompatActivity
         if (Login.iniciarSesion == 2){
             navigationView.getMenu().setGroupVisible(R.id.grupo1, false);
         }
+
+        requestQueue = Volley.newRequestQueue(this);
+        listarInstructor();
     }
 
     @Override
@@ -185,11 +213,125 @@ public class MainActivity extends AppCompatActivity
         finish();
     }
 
-    public void ListarInstructor(){
+    public void listarInstructor(){
+        String urlR = Constantes.urlRol;
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, urlR, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Gson gson = new Gson();
+                Type type = new TypeToken<List<Rol>>(){}.getType();
+                rolList = gson.fromJson(response, type);
+                obtenerRolInstructor();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+        requestQueue.add(stringRequest);
+
 
     }
 
 
+    public void obtenerRolInstructor(){
+        String url = Constantes.urlRolPersona;
+        StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Gson gson = new Gson();
+                Type type = new TypeToken<List<RolPersona>>(){}.getType();
+                List<RolPersona> rolPersonaList = gson.fromJson(response,type);
+                for (int i=0; i<rolPersonaList.size(); i++){
+                    RolPersona rolPersona = rolPersonaList.get(i);
+                    for (int j=0; j<rolList.size(); j++){
+                        if (rolList.get(j).getRol().equals("INSTRUCTOR") && rolPersona.getRol().equals(rolList.get(j).getUrl())) {
+                            rolPersonaAList.add(rolPersona);
+
+
+                        }
+                    }
+                }
+                obtenerPersona();
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+
+        requestQueue.add(request);
+    }
+
+    public void obtenerPersona(){
+        String url = Constantes.urlPersona;
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Gson gson = new Gson();
+                Type type = new TypeToken<List<Persona>>(){}.getType();
+                List<Persona> personaList = gson.fromJson(response,type);
+                for (int i=0; i<personaList.size(); i++){
+                    Persona persona =personaList.get(i);
+                    for (int j=0; j<rolPersonaAList.size(); j++) {
+                        if (persona.getUrl().equals(rolPersonaAList.get(j).getPersona())) {
+                            personaAList.add(persona);
+
+                        }
+                    }
+                }
+
+                fichaInstructor();
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+
+        requestQueue.add(stringRequest);
+    }
+
+
+
+    public void fichaInstructor(){
+        String url = Constantes.urlAprendizFicha;
+        StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Gson gson = new Gson();
+                Type type = new TypeToken<List<AprendizFicha>>(){}.getType();
+                List<AprendizFicha> aprendizFichaList = gson.fromJson(response,type);
+                for (int i=0; i<aprendizFichaList.size();i++){
+                    AprendizFicha aprendizFicha = aprendizFichaList.get(i);
+                    for (int j=0; j<personaAList.size(); j++){
+                        Persona persona = personaAList.get(j);
+                        if (aprendizFicha.getPersona().equals(persona.getUrl()) && aprendizFicha.getFicha().equals(Login.fichaA.getUrl())){
+                            instructorList.add(persona.getId()+"-"+persona.getNombres()+" "+persona.getApellidos());
+
+                        }
+
+
+                    }
+                }
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+
+        requestQueue.add(request);
+    }
 
 
 }

@@ -104,7 +104,7 @@ public class FragmentPermiso extends Fragment implements View.OnClickListener{
         txtDocumento = view.findViewById(R.id.txtdocumentoSP);
         txtfecha = view.findViewById(R.id.txtFechaSP);
 
-        Roles();
+        //Roles();
         listarMotivos();
 
 
@@ -115,7 +115,8 @@ public class FragmentPermiso extends Fragment implements View.OnClickListener{
         txtNombrePed.setText(Login.personaT.getNombres()+ " " + Login.personaT.getApellidos());
         txtDocumento.setText(Login.personaT.getDocumentoIdentidad());
         txtfecha.setText(dateFormat.format(date).toString());
-
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(),android.R.layout.simple_spinner_dropdown_item,MainActivity.instructorList);
+        spinstructor.setAdapter(adapter);
 
 
         return view;

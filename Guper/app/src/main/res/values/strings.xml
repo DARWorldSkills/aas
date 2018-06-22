@@ -64,4 +64,17 @@
     <string name="bienvenido">Bienvenido a Guper</string>
 
 
+    <string name="desarroladores">Desarrolladores</string>
+    <string name="movil">Movil</string>
+    <string name="web">Web</string>
+    <string name="sw">Servicios Web</string>
+    <string name="front">Front-end</string>
+    <string name="diseño">Diseño</string>
+    <string name="documentacion">Documentación</string>
+    <string name="prueba">Pruebas</string>
+
+
+
+
+
 </resources>

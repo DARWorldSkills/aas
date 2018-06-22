@@ -17,8 +17,6 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait">
 
-
-
         </activity>
 
         <meta-data

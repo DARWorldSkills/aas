@@ -167,6 +167,7 @@ public class FragmentPerfil extends Fragment implements View.OnClickListener{
     }
 
 
+
     private void mostrarPerfil() {
 
         txtnombre.setText(personaP.getNombres());
