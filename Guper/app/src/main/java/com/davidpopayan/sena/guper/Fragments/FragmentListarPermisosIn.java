@@ -115,6 +115,7 @@ public class FragmentListarPermisosIn extends Fragment {
 
     @Override
     public void onStart() {
+        recyclerView.removeAllViewsInLayout();
         personaListA= new ArrayList<>();
         fichaListA = new ArrayList<>();
         aprendizPermisoListA = new ArrayList<>();

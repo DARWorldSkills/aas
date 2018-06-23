@@ -34,6 +34,7 @@ import com.davidpopayan.sena.guper.Fragments.FragmentPermisoIn;
 import com.davidpopayan.sena.guper.R;
 import com.davidpopayan.sena.guper.models.AprendizFicha;
 import com.davidpopayan.sena.guper.models.Constantes;
+import com.davidpopayan.sena.guper.models.Ficha;
 import com.davidpopayan.sena.guper.models.Permiso;
 import com.davidpopayan.sena.guper.models.Persona;
 import com.davidpopayan.sena.guper.models.Rol;
@@ -54,6 +55,8 @@ public class MainActivity extends AppCompatActivity
     public List<Rol> rolList = new ArrayList<>();
     public List<RolPersona> rolPersonaAList = new ArrayList<>();
     public static List<String> instructorList= new ArrayList<>();
+    public static List<Ficha> fichaListA = new ArrayList<>();
+    public static List<AprendizFicha> aprendizFichaListA = new ArrayList<>();
 
     RequestQueue requestQueue;
 
@@ -331,6 +334,57 @@ public class MainActivity extends AppCompatActivity
         });
 
         requestQueue.add(request);
+    }
+
+
+    public void listarfichaInstructor(){
+        String url = Constantes.urlAprendizFicha;
+        StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Gson gson = new Gson();
+                Type type = new TypeToken<List<AprendizFicha>>(){}.getType();
+                List<AprendizFicha> aprendizFichaList = gson.fromJson(response,type);
+                for (int i=0; i<aprendizFichaList.size();i++){
+                    AprendizFicha aprendizFicha = aprendizFichaList.get(i);
+                    if (aprendizFicha.getPersona().equals(Login.personaT.getUrl())){
+                        aprendizFichaListA.add(aprendizFicha);
+
+                    }
+                }
+                listarFichas();
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+
+        requestQueue.add(request);
+    }
+
+    public void listarFichas(){
+        String url = Constantes.urlFicha;
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Gson gson = new Gson();
+                Type type = new TypeToken<List<Ficha>>(){}.getType();
+                List<Ficha> fichaList = gson.fromJson(response,type);
+                for (int i = 0 ; i<fichaList.)
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+
+        requestQueue.add(stringRequest);
     }
 
 
