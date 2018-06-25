@@ -106,21 +106,6 @@ public class FragmentListarPermisos extends Fragment {
 
     }
 
-
-
-    @Override
-    public void onStart() {
-        super.onStart();
-
-
-
-
-
-
-    }
-
-
-
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {

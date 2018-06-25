@@ -52,12 +52,11 @@ public class MainActivity extends AppCompatActivity
     TextView txtNombreMenu;
     public static Permiso permisoP = new Permiso();
     public List<Persona> personaAList = new ArrayList<>();
-    public List<Rol> rolList = new ArrayList<>();
+    public static List<Rol> rolList = new ArrayList<>();
     public List<RolPersona> rolPersonaAList = new ArrayList<>();
     public static List<String> instructorList= new ArrayList<>();
     public static List<Ficha> fichaListA = new ArrayList<>();
     public static List<AprendizFicha> aprendizFichaListA = new ArrayList<>();
-
     RequestQueue requestQueue;
 
     @Override
@@ -66,6 +65,7 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        requestQueue = Volley.newRequestQueue(this);
 
         Fragment fragment = new FragmentInicio();
         getSupportFragmentManager().beginTransaction().replace(R.id.contenedor, fragment).commit();
@@ -94,9 +94,8 @@ public class MainActivity extends AppCompatActivity
         if (Login.iniciarSesion == 2){
             navigationView.getMenu().setGroupVisible(R.id.grupo1, false);
         }
-
-        requestQueue = Volley.newRequestQueue(this);
         listarInstructor();
+        listarfichaInstructor();
     }
 
     @Override
@@ -251,8 +250,6 @@ public class MainActivity extends AppCompatActivity
                     for (int j=0; j<rolList.size(); j++){
                         if (rolList.get(j).getRol().equals("INSTRUCTOR") && rolPersona.getRol().equals(rolList.get(j).getUrl())) {
                             rolPersonaAList.add(rolPersona);
-
-
                         }
                     }
                 }
@@ -375,7 +372,17 @@ public class MainActivity extends AppCompatActivity
                 Gson gson = new Gson();
                 Type type = new TypeToken<List<Ficha>>(){}.getType();
                 List<Ficha> fichaList = gson.fromJson(response,type);
-                for (int i = 0 ; i<fichaList.)
+                AprendizFicha aprendizFicha;
+                Ficha ficha;
+                for (int i = 0 ; i<fichaList.size(); i++){
+                    ficha = fichaList.get(i);
+                    for (int j =0; j<aprendizFichaListA.size(); j++){
+                        aprendizFicha = aprendizFichaListA.get(j);
+                        if (aprendizFicha.getFicha().equals(ficha.getUrl())) {
+                            fichaListA.add(ficha);
+                        }
+                    }
+                }
             }
         }, new Response.ErrorListener() {
             @Override
@@ -386,6 +393,7 @@ public class MainActivity extends AppCompatActivity
 
         requestQueue.add(stringRequest);
     }
+
 
 
 }

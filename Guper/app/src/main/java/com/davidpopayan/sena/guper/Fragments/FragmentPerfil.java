@@ -66,12 +66,17 @@ public class FragmentPerfil extends Fragment implements View.OnClickListener{
         cargarUsuario();
 
 
-
         btnGuardar.setOnClickListener(this);
 
+        ImgPerfil.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cargarImagen();
+            }
+        });
 
         btnCambiarP.setOnClickListener(new View.OnClickListener() {
-            @Override
+          @Override
             public void onClick(View v) {
 
                 cargarImagen();
@@ -165,7 +170,6 @@ public class FragmentPerfil extends Fragment implements View.OnClickListener{
 
         requestQueue.add(stringRequest);
     }
-
 
 
     private void mostrarPerfil() {

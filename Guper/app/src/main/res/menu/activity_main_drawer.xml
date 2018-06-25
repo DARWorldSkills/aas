@@ -5,11 +5,12 @@
 
 
 
-    <group>
+    <group android:checkableBehavior="single">
         <item
             android:id="@+id/inicio"
+            android:icon="@drawable/c"
             android:title="@string/inicio"
-            android:icon="@drawable/inicio">
+           >
 
         </item>
     </group>
@@ -20,22 +21,22 @@
         android:checkableBehavior="single">
         <item
             android:id="@+id/nav_solicitar"
-            android:icon="@drawable/solicitar"
+            android:icon="@drawable/l"
             android:title="@string/solper" />
         <item
             android:id="@+id/nav_ver"
-            android:icon="@drawable/pruebaper"
+            android:icon="@drawable/o"
             android:title="@string/persoli" />
         <item
             android:id="@+id/nav_perfil"
-            android:icon="@drawable/perfilnav"
+            android:icon="@drawable/u"
             android:title="@string/perfil" />
 
         <item android:title="@string/detalle">
             <menu>
                 <item
                     android:id="@+id/acerca"
-                    android:icon="@drawable/acerca"
+                    android:icon="@drawable/ayud"
                     android:title="@string/acerca"/>
             </menu>
         </item>
@@ -50,29 +51,31 @@
 
         <item
             android:id="@+id/nav_permisoI"
-            android:icon="@drawable/solicitar"
+            android:icon="@drawable/l"
             android:title="@string/solperI" />
 
         <item
             android:id="@+id/nav_VerIns"
-            android:icon="@drawable/pruebaper"
+            android:icon="@drawable/o"
             android:title="@string/permisosEs" />
-
-
           <item android:title="@string/detalle">
               <menu>
+
                   <item
+
                       android:id="@+id/acerca2"
-                      android:icon="@drawable/acerca"
+                        android:icon="@drawable/ayud"
                       android:title="@string/acerca"/>
+
 
               </menu>
           </item>
 
-          <group>
+          <group
+              android:checkableBehavior="single">
               <item
                   android:id="@+id/nav_cerrar2"
-                  android:icon="@drawable/cerrar"
+                  android:icon="@drawable/salir"
                   android:title="@string/cerar"/>
           </group>
 

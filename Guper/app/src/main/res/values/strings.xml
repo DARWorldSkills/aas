@@ -62,6 +62,7 @@
 
 
     <string name="bienvenido">Bienvenido a Guper</string>
+    <string name="salidaa">Hora de Salida:</string>
 
 
     <string name="desarroladores">Desarrolladores</string>
@@ -72,9 +73,8 @@
     <string name="diseño">Diseño</string>
     <string name="documentacion">Documentación</string>
     <string name="prueba">Pruebas</string>
-
-
-
+    <string name="usuario">Usuario</string>
+    <string name="contrasena">Constraseña</string>
 
 
 </resources>

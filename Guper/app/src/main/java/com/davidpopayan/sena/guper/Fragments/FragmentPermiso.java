@@ -70,10 +70,6 @@ public class FragmentPermiso extends Fragment implements View.OnClickListener{
     private int minuto = c.get(Calendar.MINUTE);
 
     public Permiso permisoP = new Permiso();
-    public List<Persona> personaAList = new ArrayList<>();
-    public List<Rol> rolList = new ArrayList<>();
-    public List<RolPersona> rolPersonaAList = new ArrayList<>();
-    public List<String> instructorList= new ArrayList<>();
     Date date = new Date();
     DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     public Persona personaP;
@@ -104,7 +100,7 @@ public class FragmentPermiso extends Fragment implements View.OnClickListener{
         txtDocumento = view.findViewById(R.id.txtdocumentoSP);
         txtfecha = view.findViewById(R.id.txtFechaSP);
 
-        //Roles();
+
         listarMotivos();
 
 
@@ -115,6 +111,7 @@ public class FragmentPermiso extends Fragment implements View.OnClickListener{
         txtNombrePed.setText(Login.personaT.getNombres()+ " " + Login.personaT.getApellidos());
         txtDocumento.setText(Login.personaT.getDocumentoIdentidad());
         txtfecha.setText(dateFormat.format(date).toString());
+
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(),android.R.layout.simple_spinner_dropdown_item,MainActivity.instructorList);
         spinstructor.setAdapter(adapter);
 
@@ -297,134 +294,5 @@ public class FragmentPermiso extends Fragment implements View.OnClickListener{
         requestQueue.add(stringRequest);
     }
 
-    public void Roles(){
-        RequestQueue requestQueue = new Volley().newRequestQueue(getContext());
-        String url = Constantes.urlRol;
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                Gson gson = new Gson();
-                Type type = new TypeToken<List<Rol>>(){}.getType();
-                rolList = gson.fromJson(response, type);
-                obtenerRolInstructor();
-
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-        });
-
-        requestQueue.add(stringRequest);
-    }
-
-    public void obtenerRolInstructor(){
-        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
-        String url = Constantes.urlRolPersona;
-        StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                Gson gson = new Gson();
-                Type type = new TypeToken<List<RolPersona>>(){}.getType();
-                List<RolPersona> rolPersonaList = gson.fromJson(response,type);
-                for (int i=0; i<rolPersonaList.size(); i++){
-                    RolPersona rolPersona = rolPersonaList.get(i);
-                    for (int j=0; j<rolList.size(); j++){
-                        if (rolList.get(j).getRol().equals("INSTRUCTOR") && rolPersona.getRol().equals(rolList.get(j).getUrl())) {
-                            rolPersonaAList.add(rolPersona);
-
-
-                        }
-                    }
-                }
-                obtenerPersona();
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-        });
-
-
-        requestQueue.add(request);
-    }
-
-
-
-    public void obtenerPersona(){
-        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
-        String url = Constantes.urlPersona;
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                Gson gson = new Gson();
-                Type type = new TypeToken<List<Persona>>(){}.getType();
-                List<Persona> personaList = gson.fromJson(response,type);
-                for (int i=0; i<personaList.size(); i++){
-                    Persona persona =personaList.get(i);
-                    for (int j=0; j<rolPersonaAList.size(); j++) {
-                        if (persona.getUrl().equals(rolPersonaAList.get(j).getPersona())) {
-                            personaAList.add(persona);
-
-                        }
-                    }
-                }
-
-                fichaInstructor();
-
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-        });
-
-        requestQueue.add(stringRequest);
-    }
-
-
-
-    public void fichaInstructor(){
-        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
-        String url = Constantes.urlAprendizFicha;
-        StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                Gson gson = new Gson();
-                Type type = new TypeToken<List<AprendizFicha>>(){}.getType();
-                List<AprendizFicha> aprendizFichaList = gson.fromJson(response,type);
-                for (int i=0; i<aprendizFichaList.size();i++){
-                    AprendizFicha aprendizFicha = aprendizFichaList.get(i);
-                    for (int j=0; j<personaAList.size(); j++){
-                        Persona persona = personaAList.get(j);
-                        if (aprendizFicha.getPersona().equals(persona.getUrl()) && aprendizFicha.getFicha().equals(Login.fichaA.getUrl())){
-                            instructorList.add(persona.getId()+"-"+persona.getNombres()+" "+persona.getApellidos());
-
-                        }
-
-
-                    }
-                }
-
-                ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(),android.R.layout.simple_spinner_dropdown_item,instructorList);
-                spinstructor.setAdapter(adapter);
-
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-        });
-
-        requestQueue.add(request);
-    }
 
 }

@@ -8,6 +8,7 @@ public class Persona {
     private String apellidos;
     private String telefono;
     private String usuario;
+    private boolean isSelected;
 
     public Persona() {
     }
@@ -66,5 +67,13 @@ public class Persona {
 
     public void setUsuario(String usuario) {
         this.usuario = usuario;
+    }
+
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(boolean selected) {
+        isSelected = selected;
     }
 }

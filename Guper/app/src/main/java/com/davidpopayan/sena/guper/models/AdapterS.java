@@ -94,10 +94,6 @@ public class AdapterS extends RecyclerView.Adapter<AdapterS.Holder> {
                 cardView.setBackgroundColor(itemView.getResources().getColor(R.color.cancelado));
             }
 
-
-
-
-
         }
 
 
